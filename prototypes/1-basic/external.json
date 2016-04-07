@@ -1,0 +1,7 @@
+externs = {
+    "flag_obstacles_reorient": true,
+    
+    "total_obstacles": 5,
+    "obstacle_min_velocity": 5,
+    "obstacle_max_velocity": 5
+}
