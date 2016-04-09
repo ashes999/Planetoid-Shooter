@@ -38,6 +38,10 @@ Game = {
             Crafty.e('Gun');
 
             Crafty.e("HealthBar");
+
+            Crafty.e('Actor').size(0, 0).after(1, function() {
+                Crafty.e('Meteor');
+            })
         });
     }
 }
