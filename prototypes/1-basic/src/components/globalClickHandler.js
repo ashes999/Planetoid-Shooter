@@ -1,17 +1,12 @@
 Crafty.c('GlobalClickHandler', {
     init: function() {
         var self = this;
-        this.requires('2D, Alpha, Canvas, Mouse')
+        this.requires('2D, Alpha, Canvas, Mouse, FollowCamera')
             .attr({ w: Game.view.width, h: Game.view.height })
             .bind('Click', function(e) {
                 if (this.clickFunction != null) {
                     this.clickFunction(e.realX, e.realY);
                 }
-            })
-            // Move with the viewport
-            .bind('EnterFrame', function() {
-                self.x = -Crafty.viewport.x;
-                self.y = -Crafty.viewport.y;
             });
     },
 

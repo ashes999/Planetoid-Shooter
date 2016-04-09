@@ -36,7 +36,8 @@ Game = {
             var p = Crafty.e('Player');
             Crafty.viewport.follow(p);
             Crafty.e('Gun');
-            
+
+            Crafty.e("HealthBar");
         });
     }
 }
