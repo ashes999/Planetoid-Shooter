@@ -8,18 +8,26 @@ Crafty.c('Gun', {
     init: function() {
         this.requires('Actor').color('black').size(16, 2);
         this.z = 100;
+
         var gun = this;
+        var player = Crafty(Crafty('Player')[0]);
+
         this.bind('EnterFrame', function() {
-            var player = Crafty(Crafty('Player')[0]);
-            gun.move(player.x + player.attr('w') / 2, player.y + (player.attr('h') / 2));
+            gun.move(player.x + player.w / 2, player.y + (player.h / 2));
         });
 
         Crafty.e('GlobalClickHandler')
             .onClick(function(x, y) {
-                console.log("FIRE: " + x + ", " + y);
+                var angleInRadians = gun.rotation * Math.PI / 180;
+                var vx = config('bullet_speed') * Math.cos(angleInRadians);
+                var vy = config('bullet_speed') * Math.sin(angleInRadians);
+                
+                Crafty.e('Bullet')
+                    // I can't do math right now. Start on player center.
+                    .move(player.x + (player.w / 2), player.y + (player.h / 2))
+                    .velocity(vx, vy);
             })
             .onMove(function(x, y) {
-                var gun = Crafty(Crafty('Gun')[0]);
                 var dx = x - gun.x;
                 var dy = y - gun.y;
 
@@ -28,4 +36,10 @@ Crafty.c('Gun', {
                 gun.rotation = angle;
             });
     }
-})
+});
+
+Crafty.c('Bullet', {
+    init: function() {
+        this.requires('Actor').color('white').size(8, 8);
+    }
+});
