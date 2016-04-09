@@ -18,11 +18,10 @@ Crafty.c('Meteor', {
 });
 
 Crafty.c('Monster', {
-    init: function() {
-        this.requires('Actor').color('#224488').size(20, 20);
-    },
-
     spawn: function(meteor) {
+        this.requires('Actor').color('#224488').size(20, 20);
+        this.speed = randomBetween('monster_velocity_min', 'monster_velocity_max');
+
         // Pick distance
         var xDistance = randomBetween(50, 100);
         var yDistance = randomBetween(25, 50);
@@ -36,5 +35,12 @@ Crafty.c('Monster', {
 
         this.x = meteor.x + xDistance + (xDistance > 0 ? meteor.w : 0);
         this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);
+        var self = this;
+
+        this.bind('EnterFrame', function() {
+            var player = Crafty(Crafty('Player')[0]);
+            var travelTime = Math.abs(this.x - player.x)
+            this.move(player.x, player.y, travelTime);
+        })
     }
 })
