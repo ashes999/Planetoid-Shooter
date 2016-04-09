@@ -6,9 +6,20 @@ Game = {
     },
 
     start: function() {
-        Crafty.init(Game.view.width, Game.view.height);
+        Crafty.init(800, 600);
         Crafty.background("#bbb");
-        Crafty.e('Player');
+        var p = Crafty.e('Player');
+        Crafty.viewport.centerOn(p);
+        
+        // Global mouse click handler
+        var self = Crafty.e('2D, Alpha, Canvas, Mouse').attr({ w: Game.view.width, h: Game.view.height })
+            .bind('Click', function(e) {
+                console.log('click: ' + JSON.stringify(e));
+            })
+            .bind('EnterFrame', function() {
+               self.x = -Crafty.viewport.x;
+               self.y = -Crafty.viewport.y; 
+            });
     }
 }
 
