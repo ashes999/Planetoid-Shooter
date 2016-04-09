@@ -14,6 +14,7 @@ Crafty.c('Gun', {
     init: function() {
         this.requires('Actor').color('black').size(16, 2);
         this.z = 100;
+        this.lastShot = Date.now() - 1000; // 1s ago
 
         var gun = this;
         var player = Crafty(Crafty('Player')[0]);
@@ -24,14 +25,7 @@ Crafty.c('Gun', {
 
         Crafty.e('GlobalClickHandler')
             .onClick(function(x, y) {
-                var angleInRadians = gun.rotation * Math.PI / 180;
-                var vx = config('bullet_speed') * Math.cos(angleInRadians);
-                var vy = config('bullet_speed') * Math.sin(angleInRadians);
-
-                Crafty.e('Bullet')
-                    // I can't do math right now. Start on player center.
-                    .move(player.x + (player.w / 2), player.y + (player.h / 2))
-                    .velocity(vx, vy);
+                gun.fire();
             })
             .onMove(function(x, y) {
                 var dx = x - gun.x;
@@ -41,6 +35,26 @@ Crafty.c('Gun', {
                 var angle = Math.atan2(dy, dx) * 180 / Math.PI;
                 gun.rotation = angle;
             });
+    },
+
+    fire: function()
+    {
+        var gun = Crafty(Crafty('Gun')[0]);
+        var player = Crafty(Crafty('Player')[0]);
+        
+        var now = Date.now();
+        if ((now - gun.lastShot) > 250) { // 250ms
+            gun.lastShot = now;
+
+            var angleInRadians = gun.rotation * Math.PI / 180;
+            var vx = config('bullet_speed') * Math.cos(angleInRadians);
+            var vy = config('bullet_speed') * Math.sin(angleInRadians);
+
+            Crafty.e('Bullet')
+                // I can't do math right now. Start on player center.
+                .move(player.x + (player.w / 2), player.y + (player.h / 2))
+                .velocity(vx, vy);
+        }
     }
 });
 
