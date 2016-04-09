@@ -24,7 +24,7 @@ Crafty.c('Gun', {
         });
 
         Crafty.e('GlobalClickHandler')
-            .onClick(function(x, y) {
+            .whileMouseDown(function(x, y) {
                 gun.fire();
             })
             .onMove(function(x, y) {
@@ -41,9 +41,10 @@ Crafty.c('Gun', {
     {
         var gun = Crafty(Crafty('Gun')[0]);
         var player = Crafty(Crafty('Player')[0]);
-        
+
         var now = Date.now();
-        if ((now - gun.lastShot) > 250) { // 250ms
+        // gun_shot_rate_ms is in milliseconds
+        if ((now - gun.lastShot) > config('gun_shot_rate_ms')) {
             gun.lastShot = now;
 
             var angleInRadians = gun.rotation * Math.PI / 180;
