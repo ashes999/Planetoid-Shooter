@@ -6,6 +6,35 @@ Crafty.c('Meteor', {
         this.rotation = randomBetween(0, 180);
         this.move(x, y);
         this.tween({ 'w': 64, 'h': 64, rotation: 0 }, 0.25);
-        console.log("A meteor lands!");
+        var meteor = this;
+
+        this.one('TweenEnd', function() {
+            console.log("A meteor lands!");
+            for (var i = 0; i < randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters')); i++) {
+                Crafty.e('Monster').spawn(meteor);
+            }
+        });
     }
 });
+
+Crafty.c('Monster', {
+    init: function() {
+        this.requires('Actor').color('#224488').size(20, 20);
+    },
+
+    spawn: function(meteor) {
+        // Pick distance
+        var xDistance = randomBetween(50, 100);
+        var yDistance = randomBetween(25, 50);
+
+        if (randomBetween(0, 100) <= 50) {
+            xDistance *= -1;
+        }
+        if (randomBetween(0, 100) <= 50) {
+            yDistance *= -1;
+        }
+
+        this.x = meteor.x + xDistance + (xDistance > 0 ? meteor.w : 0);
+        this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);
+    }
+})

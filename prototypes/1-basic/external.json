@@ -1,4 +1,6 @@
 externs = {
     "bullet_speed": 10,
-    "gun_shot_rate_ms": 250
+    "gun_shot_rate_ms": 250,
+    "min_meteor_monsters": 3,
+    "max_meteor_monsters": 5
 }
