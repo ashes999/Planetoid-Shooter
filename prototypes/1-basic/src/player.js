@@ -61,6 +61,10 @@ Crafty.c('Gun', {
 
 Crafty.c('Bullet', {
     init: function() {
-        this.requires('Actor').color('white').size(8, 8);
+        var self = this;
+        this.requires('Actor').color('white').size(8, 8)
+            .collide('Wall', function() {
+                self.die();
+            })
     }
 });
