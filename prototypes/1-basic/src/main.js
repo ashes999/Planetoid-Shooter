@@ -7,8 +7,8 @@ Game = {
 
     start: function() {
         Crafty.init(Game.view.width, Game.view.height);
-        Crafty.background("#eeeeee");
-        Crafty.e('Actor').controllable(100);;
+        Crafty.background("#bbb");
+        Crafty.e('Player');
     }
 }
 
