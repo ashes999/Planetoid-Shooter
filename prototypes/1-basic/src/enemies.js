@@ -6,12 +6,25 @@ Crafty.c('Meteor', {
         this.rotation = randomBetween(0, 180);
         this.move(x, y);
         this.tween({ 'w': 64, 'h': 64, rotation: 0 }, 0.25);
+
         var meteor = this;
+        this.lastHurtPlayer = Date.now() - 1000; // 1s ago
+        var player = Crafty(Crafty('Player')[0]);
 
         this.one('TweenEnd', function() {
             console.log("A meteor lands!");
-            for (var i = 0; i < randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters')); i++) {
+            var numMonsters = randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters'));
+            for (var i = 0; i < numMonsters; i++) {
                 Crafty.e('Monster').spawn(meteor);
+            }
+            this.color('#ff9911');
+        });
+
+        this.collide('Player', function() {
+            var now = Date.now();
+            if (now - meteor.lastHurtPlayer >= 1000) { // 1s or monster_damage
+                meteor.lastHurtPlayer = now;
+                player.getHurt(config('lava_damage'));
             }
         });
     }

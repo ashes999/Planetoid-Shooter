@@ -52,7 +52,7 @@ Crafty.c('Bullet', {
         var self = this;
         this.damage = config('bullet_damage');
         this.requires('Actor').color('white').size(8, 8)
-            .collide(['Wall', 'Meteor'], function() {
+            .collide(['Wall'], function() {
                 self.die();
             })
     }
