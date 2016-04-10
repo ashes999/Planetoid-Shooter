@@ -21,12 +21,26 @@ Crafty.c('Monster', {
     init: function() {
         this.requires('Actor').color('#224488').size(20, 20);
         this.damage = config('monster_damage');
-        
+        this.health = randomBetween(config('min_monster_health'), config('max_monster_health'));
+
         var monster = this;
         this.collide('Player', function() {
             monster.die();
             Crafty(Crafty('Player')[0]).getHurt(monster.damage);
-        })
+        });
+
+        this.collide('Bullet', function(data) {
+            var bullet = data[0].obj;
+            monster.getHurt(bullet.damage);
+            bullet.die();
+        });
+    },
+
+    getHurt: function(damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.die();
+        }
     },
 
     spawn: function(meteor) {

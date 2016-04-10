@@ -50,6 +50,7 @@ Crafty.c('Gun', {
 Crafty.c('Bullet', {
     init: function() {
         var self = this;
+        this.damage = config('bullet_damage');
         this.requires('Actor').color('white').size(8, 8)
             .collide(['Wall', 'Meteor'], function() {
                 self.die();

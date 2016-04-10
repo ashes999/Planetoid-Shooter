@@ -5,5 +5,8 @@ externs = {
     "max_meteor_monsters": 5,
     "monster_velocity_min": 50,
     "monster_velocity_max": 75,
-    "monster_damage": 20
+    "monster_damage": 20,
+    "min_monster_health": 25,
+    "max_monster_health": 40,
+    "bullet_damage": 10
 }
