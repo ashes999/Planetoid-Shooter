@@ -14,9 +14,13 @@ Game = {
         loadImages(["images/background.jpg"], function() {
             Crafty.init(Game.view.width, Game.view.height);
 
-            Crafty.e('Actor')//.img('images/background.jpg', "repeat")
-                .move(0, 0).size(Game.world.width, Game.world.height)
-                .z = -1;
+            var bg = Crafty.e('Actor').move(0, 0).size(Game.world.width, Game.world.height);
+            bg.z = -1;
+                
+            if (config('disable_images') != true)
+            {
+                bg.img('images/background.jpg', "repeat")
+            }
 
             // World-bounds walls
             Crafty.e('Wall').size(Game.world.width, 1).move(0, 0); // top
