@@ -18,8 +18,18 @@ Crafty.c('Meteor', {
 });
 
 Crafty.c('Monster', {
-    spawn: function(meteor) {
+    init: function() {
         this.requires('Actor').color('#224488').size(20, 20);
+        this.damage = config('monster_damage');
+        
+        var monster = this;
+        this.collide('Player', function() {
+            monster.die();
+            Crafty(Crafty('Player')[0]).getHurt(monster.damage);
+        })
+    },
+
+    spawn: function(meteor) {
         this.speed = randomBetween(config('monster_velocity_min'), config('monster_velocity_max'));
 
         // Pick distance
