@@ -3,16 +3,19 @@ Crafty.c('Meteor', {
         this.requires('Actor').size(400, 400).color('#444444');
         var x = randomBetween(0, Game.world.width - 48);
         var y = randomBetween(0, Game.world.height - 48);
-        this.rotation = randomBetween(0, 180);
+        this.rotation = randomBetween(90, 270);
         this.move(x, y);
         this.tween({ 'w': 64, 'h': 64, rotation: 0 }, 0.25);
 
         var meteor = this;
         this.lastHurtPlayer = Date.now() - 1000; // 1s ago
+        this.landed = false;
         var player = Crafty(Crafty('Player')[0]);
 
         this.one('TweenEnd', function() {
             console.log("A meteor lands!");
+            Crafty(Crafty('Stats')[0]).meteorsSeen++;
+            meteor.landed = true;
             var numMonsters = randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters'));
             for (var i = 0; i < numMonsters; i++) {
                 Crafty.e('Monster').spawn(meteor);
@@ -21,10 +24,12 @@ Crafty.c('Meteor', {
         });
 
         this.collide('Player', function() {
-            var now = Date.now();
-            if (now - meteor.lastHurtPlayer >= 1000) { // 1s or monster_damage
-                meteor.lastHurtPlayer = now;
-                player.getHurt(config('lava_damage'));
+            if (meteor.landed == true) {
+                var now = Date.now();
+                if (now - meteor.lastHurtPlayer >= 1000) { // 1s or monster_damage
+                    meteor.lastHurtPlayer = now;
+                    player.getHurt(config('lava_damage'));
+                }
             }
         });
     }
@@ -45,6 +50,7 @@ Crafty.c('Monster', {
         this.collide('Bullet', function(data) {
             var bullet = data[0].obj;
             monster.getHurt(bullet.damage);
+            Crafty(Crafty('Stats')[0]).bulletsHit++;
             bullet.die();
         });
     },
@@ -52,7 +58,7 @@ Crafty.c('Monster', {
     getHurt: function(damage) {
         this.health -= damage;
         if (this.health <= 0) {
-            this.die();
+            this.die();            
         }
     },
 

@@ -14,7 +14,7 @@ Game = {
         loadImages(["images/background.jpg"], function() {
             Crafty.init(Game.view.width, Game.view.height);
 
-            Crafty.e('Actor').img('images/background.jpg', "repeat")
+            Crafty.e('Actor')//.img('images/background.jpg', "repeat")
                 .move(0, 0).size(Game.world.width, Game.world.height)
                 .z = -1;
 
@@ -38,8 +38,8 @@ Game = {
             Crafty.e('Gun');
 
             Crafty.e("HealthBar");
-
             Crafty.e('MeteorManager');
+            Crafty.e('Stats');
         });
     }
 }

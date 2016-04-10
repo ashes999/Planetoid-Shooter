@@ -11,7 +11,7 @@ Crafty.c('Player', {
         if (this.health == 0) {
             this.die();
             Crafty(Crafty('Gun')[0]).die();
-            Crafty.e('Text2, FollowCamera').move(100, 100).fontSize(72).text('GAME OVER!');
+            Crafty(Crafty('Stats')[0]).showGameOver();
         }
     }
 });
