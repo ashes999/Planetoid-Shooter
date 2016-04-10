@@ -50,7 +50,6 @@ Crafty.c('Monster', {
         this.collide('Bullet', function(data) {
             var bullet = data[0].obj;
             monster.getHurt(bullet.damage);
-            Crafty(Crafty('Stats')[0]).bulletsHit++;
             bullet.die();
         });
     },
@@ -58,6 +57,7 @@ Crafty.c('Monster', {
     getHurt: function(damage) {
         this.health -= damage;
         if (this.health <= 0) {
+            Crafty(Crafty('Stats')[0]).monstersKilled++;            
             this.die();            
         }
     },

@@ -34,7 +34,6 @@ Crafty.c('Gun', {
         // gun_shot_rate_ms is in milliseconds
         if ((now - gun.lastShot) > config('gun_shot_rate_ms')) {
             gun.lastShot = now;
-            Crafty(Crafty('Stats')[0]).bulletsFired++;
             
             var angleInRadians = gun.rotation * Math.PI / 180;
             var vx = config('bullet_speed') * Math.cos(angleInRadians);
