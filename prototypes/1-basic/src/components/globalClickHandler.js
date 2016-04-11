@@ -1,6 +1,9 @@
+// All callbacks require (x:Float, y:Float) as inputs
 Crafty.c('GlobalClickHandler', {
-    init: function() {
+    init: function() {        
         var self = this;
+        self.mouseUpCallback = null;
+        
         this.requires('2D, Alpha, Canvas, Mouse, FollowCamera')
             .attr({ w: Game.view.width, h: Game.view.height });
     },
@@ -18,6 +21,11 @@ Crafty.c('GlobalClickHandler', {
         });
         return this;
     },
+    
+    onMouseUp: function(callback) {
+        this.mouseUpCallback = callback;
+        return this;
+    },
 
     whileMouseDown: function(callback) {
         var self = this;
@@ -32,6 +40,9 @@ Crafty.c('GlobalClickHandler', {
         this.bind('MouseUp', function(e) {
             self.isMouseDown = false;
             self.mouseCoordinates = [e.realX, e.realY];
+            if (self.mouseUpCallback != null) {
+                self.mouseUpCallback(e.realX, e.realY);
+            }
         });
 
         this.bind('MouseMove', function(e) {

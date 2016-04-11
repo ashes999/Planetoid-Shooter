@@ -1,14 +1,20 @@
 externs = {
-    "bullet_speed": 10,
-    "gun_shot_rate_ms": 250,
+    "lava_damage": 25,
+    "disable_images": false,    
+    
     "min_meteor_monsters": 3,
     "max_meteor_monsters": 5,
+    
     "monster_velocity_min": 50,
     "monster_velocity_max": 75,
     "monster_damage": 20,
     "min_monster_health": 25,
     "max_monster_health": 40,
-    "bullet_damage": 10,
-    "lava_damage": 25,
-    "disable_images": false
+    
+    "gun_shot_rate_ms": 250,
+    "bullet_speed": 10,
+    "bullet_damage": 10,    
+    
+    "plasma_speed": 20,
+    "plasma_damage": 25
 }

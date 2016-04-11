@@ -23,7 +23,7 @@ Crafty.c('BaseGun', {
     }
 });
 
-Crafty.c('Gun', {
+Crafty.c('MachineGun', {
     init: function() {
         this.requires('BaseGun').color('black').size(16, 2);
         this.lastShot = Date.now() - 1000; // 1s ago
@@ -37,9 +37,8 @@ Crafty.c('Gun', {
             })
     },
 
-    fire: function()
-    {
-        var gun = Crafty.first('Gun');
+    fire: function() {
+        var gun = Crafty.first('BaseGun');
         var player = Crafty.first('Player');
         if (gun == null || player == null) { return; }
 
@@ -52,11 +51,67 @@ Crafty.c('Gun', {
             var vx = config('bullet_speed') * Math.cos(angleInRadians);
             var vy = config('bullet_speed') * Math.sin(angleInRadians);
 
-            Crafty.e('Bullet')
-                // I can't do math right now. Start on player center.
-                .move(player.x + (player.w / 2), player.y + (player.h / 2))
-                .velocity(vx, vy);
+            Crafty.e('GunBullet').velocity(vx, vy)
+                .move(player.x + (player.w / 2), player.y + (player.h / 2));
         }
+    }
+});
+
+Crafty.c('PlasmaGun', {
+    init: function() {
+        this.charges = 0;
+        this.bullet = null;
+        
+        this.requires('BaseGun').color('orange').size(10, 6);
+
+        var gun = this;
+        var player = Crafty.single('Player');
+
+        Crafty.single('GlobalClickHandler')
+            .whileMouseDown(function(x, y) {
+                gun.charge();
+            }).onMouseUp(function(x, y) {
+               gun.fire(); 
+            });
+    },
+    
+    charge: function() {
+        var gun = this;
+        var player = Crafty.first("Player");
+        if (player == null) { return; }
+        
+        if (this.bullet == null) {
+            var bullet = Crafty.e('PlasmaBullet');
+            bullet.bind('EnterFrame', this.centerOverPlayer);
+            this.bullet = bullet;
+        }
+        
+        this.charges = Math.min(this.charges + 1, 20);
+    },
+
+    fire: function() {
+        console.log("Firing: " + this.charges);
+        this.charges = 0;
+        this.bullet.unbind('EnterFrame', this.centerOverPlayer);
+        
+        var gun = Crafty.first('PlasmaGun');
+        var player = Crafty.first('Player');
+        if (gun == null || player == null) { return; }
+             
+        var angleInRadians = gun.rotation * Math.PI / 180;
+        var vx = config('plasma_speed') * Math.cos(angleInRadians);
+        var vy = config('plasma_speed') * Math.sin(angleInRadians);
+        console.log('x='+vx+' y='+vy)
+        this.bullet.velocity(vx, vy);
+        this.bullet = null;
+    },
+    
+    centerOverPlayer: function() {
+        var player = Crafty.single("Player");
+        var gun = Crafty.single("PlasmaGun"); 
+        var bullet = Crafty.last("PlasmaBullet");
+        bullet.move(player.x + ((player.w - bullet.w) / 2), player.y - 8 - bullet.h);
+        bullet.size(8 + gun.charges, 8 + gun.charges);
     }
 });
 
@@ -65,13 +120,30 @@ Crafty.c('Bullet', {
     init: function() {
         var bullet = this;
         this.damage = config('bullet_damage');
-        this.requires('Actor').color('white').size(8, 8)
+        this.z = -100;
+        this.requires('Actor')
             .collide(['Wall'], function() {
                 bullet.die();
             }).collide('Monster', function(data) {
                 var monster = data[0].obj;
                 monster.getHurt(bullet.damage);
-                bullet.die();
             });
     }
+});
+
+Crafty.c('GunBullet', {
+   init: function() {
+       this.requires('Bullet').color('white').size(8, 8)
+        .collide('Monster', function(data) {
+            this.die();
+        });
+   }
+});
+
+Crafty.c('PlasmaBullet', {
+   init: function() {
+       this.requires('Bullet').color('yellow').size(8, 8);
+       this.damage = config('plasma_damage');
+       this.move(100, 100);
+   } 
 });
