@@ -6,12 +6,12 @@ Crafty.c('Player', {
     getHurt: function(damage) {
         this.health -= damage;
         this.health = Math.max(this.health, 0);
-        Crafty(Crafty('HealthBar')[0]).update(this.health);
+        Crafty.single('HealthBar').update(this.health);
 
         if (this.health == 0) {
             this.die();
-            Crafty(Crafty('Gun')[0]).die();
-            Crafty(Crafty('Stats')[0]).showGameOver();
+            Crafty.single('Gun').die();
+            Crafty.single('Stats').showGameOver();
         }
     }
 });

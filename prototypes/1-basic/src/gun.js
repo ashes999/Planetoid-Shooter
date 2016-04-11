@@ -5,7 +5,7 @@ Crafty.c('Gun', {
         this.lastShot = Date.now() - 1000; // 1s ago
 
         var gun = this;
-        var player = Crafty(Crafty('Player')[0]);
+        var player = Crafty.single('Player');
 
         this.bind('EnterFrame', function() {
             gun.move(player.x + player.w / 2, player.y + (player.h / 2));
@@ -27,8 +27,9 @@ Crafty.c('Gun', {
 
     fire: function()
     {
-        var gun = Crafty(Crafty('Gun')[0]);
-        var player = Crafty(Crafty('Player')[0]);
+        var gun = Crafty.first('Gun');
+        var player = Crafty.first('Player');
+        if (gun == null || player == null) { return; }
 
         var now = Date.now();
         // gun_shot_rate_ms is in milliseconds
@@ -49,11 +50,15 @@ Crafty.c('Gun', {
 
 Crafty.c('Bullet', {
     init: function() {
-        var self = this;
+        var bullet = this;
         this.damage = config('bullet_damage');
         this.requires('Actor').color('white').size(8, 8)
             .collide(['Wall'], function() {
-                self.die();
-            })
+                bullet.die();
+            }).collide('Monster', function(data) {
+                var monster = data[0].obj;
+                monster.getHurt(bullet.damage);
+                bullet.die();
+            });
     }
 });

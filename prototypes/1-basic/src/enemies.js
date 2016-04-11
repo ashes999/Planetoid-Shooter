@@ -10,11 +10,10 @@ Crafty.c('Meteor', {
         var meteor = this;
         this.lastHurtPlayer = Date.now() - 1000; // 1s ago
         this.landed = false;
-        var player = Crafty(Crafty('Player')[0]);
 
         this.one('TweenEnd', function() {
             console.log("A meteor lands!");
-            Crafty(Crafty('Stats')[0]).meteorsSeen++;
+            Crafty.single('Stats').meteorsSeen++;
             meteor.landed = true;
             var numMonsters = randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters'));
             for (var i = 0; i < numMonsters; i++) {
@@ -23,12 +22,12 @@ Crafty.c('Meteor', {
             this.color('#ff9911');
         });
 
-        this.collide('Player', function() {
+        this.collide('Player', function(data) {
             if (meteor.landed == true) {
                 var now = Date.now();
                 if (now - meteor.lastHurtPlayer >= 1000) { // 1s or monster_damage
                     meteor.lastHurtPlayer = now;
-                    player.getHurt(config('lava_damage'));
+                    data[0].obj.getHurt(config('lava_damage'));
                 }
             }
         });
@@ -44,20 +43,14 @@ Crafty.c('Monster', {
         var monster = this;
         this.collide('Player', function() {
             monster.die();
-            Crafty(Crafty('Player')[0]).getHurt(monster.damage);
-        });
-
-        this.collide('Bullet', function(data) {
-            var bullet = data[0].obj;
-            monster.getHurt(bullet.damage);
-            bullet.die();
+            Crafty.single('Player').getHurt(monster.damage);
         });
     },
 
     getHurt: function(damage) {
         this.health -= damage;
         if (this.health <= 0) {
-            Crafty(Crafty('Stats')[0]).monstersKilled++;            
+            Crafty.single('Stats').monstersKilled++;            
             this.die();            
         }
     },
@@ -79,7 +72,7 @@ Crafty.c('Monster', {
         this.x = meteor.x + xDistance + (xDistance > 0 ? meteor.w : 0);
         this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);
         var self = this;
-        var player = Crafty(Crafty('Player')[0]);
+        var player = Crafty.single('Player');
 
         this.bind('EnterFrame', function() {
             var distance = Math.pow(Math.abs(self.x - player.x), 2) + Math.pow(Math.abs(self.y - player.y), 2);
