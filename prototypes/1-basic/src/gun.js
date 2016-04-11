@@ -86,11 +86,10 @@ Crafty.c('PlasmaGun', {
             this.bullet = bullet;
         }
         
-        this.charges = Math.min(this.charges + 1, 20);
+        this.charges = Math.min(this.charges + 1, 40);
     },
 
     fire: function() {
-        console.log("Firing: " + this.charges);
         this.charges = 0;
         this.bullet.unbind('EnterFrame', this.centerOverPlayer);
         
@@ -101,7 +100,6 @@ Crafty.c('PlasmaGun', {
         var angleInRadians = gun.rotation * Math.PI / 180;
         var vx = config('plasma_speed') * Math.cos(angleInRadians);
         var vy = config('plasma_speed') * Math.sin(angleInRadians);
-        console.log('x='+vx+' y='+vy)
         this.bullet.velocity(vx, vy);
         this.bullet = null;
     },
@@ -126,16 +124,21 @@ Crafty.c('Bullet', {
                 bullet.die();
             }).collide('Monster', function(data) {
                 var monster = data[0].obj;
-                monster.getHurt(bullet.damage);
+                var now = Date.now();
+                if (monster.wasntHurtBy(bullet))
+                {
+                    monster.getHurt(bullet);
+                }
             });
     }
 });
 
 Crafty.c('GunBullet', {
    init: function() {
+       var bullet = this;
        this.requires('Bullet').color('white').size(8, 8)
         .collide('Monster', function(data) {
-            this.die();
+            bullet.die();
         });
    }
 });
@@ -144,6 +147,6 @@ Crafty.c('PlasmaBullet', {
    init: function() {
        this.requires('Bullet').color('yellow').size(8, 8);
        this.damage = config('plasma_damage');
-       this.move(100, 100);
+       this.move(50, 50); // without this, bullet is stuck behind a wall
    } 
 });

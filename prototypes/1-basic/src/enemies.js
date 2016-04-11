@@ -37,6 +37,7 @@ Crafty.c('Meteor', {
 Crafty.c('Monster', {
     init: function() {
         this.requires('Actor').color('#224488').size(20, 20);
+        this.hurtBy  = []; // bullets
         this.damage = config('monster_damage');
         this.health = randomBetween(config('min_monster_health'), config('max_monster_health'));
 
@@ -47,12 +48,17 @@ Crafty.c('Monster', {
         });
     },
 
-    getHurt: function(damage) {
-        this.health -= damage;
+    getHurt: function(bullet) {
+        this.hurtBy.push(bullet);
+        this.health -= bullet.damage;
         if (this.health <= 0) {
             Crafty.single('Stats').monstersKilled++;            
             this.die();            
         }
+    },
+    
+    wasntHurtBy: function(bullet) {
+        return this.hurtBy.indexOf(bullet) == -1;
     },
 
     spawn: function(meteor) {
