@@ -1,8 +1,8 @@
-Crafty.c('Gun', {
+// Base class, don't instantiate
+Crafty.c('BaseGun', {
     init: function() {
-        this.requires('Actor').color('black').size(16, 2);
+        this.requires('Actor').color('grey').size(4, 2);
         this.z = 100;
-        this.lastShot = Date.now() - 1000; // 1s ago
 
         var gun = this;
         var player = Crafty.single('Player');
@@ -12,9 +12,6 @@ Crafty.c('Gun', {
         });
 
         Crafty.e('GlobalClickHandler')
-            .whileMouseDown(function(x, y) {
-                gun.fire();
-            })
             .onMove(function(x, y) {
                 var dx = x - gun.x;
                 var dy = y - gun.y;
@@ -23,6 +20,21 @@ Crafty.c('Gun', {
                 var angle = Math.atan2(dy, dx) * 180 / Math.PI;
                 gun.rotation = angle;
             });
+    }
+});
+
+Crafty.c('Gun', {
+    init: function() {
+        this.requires('BaseGun').color('black').size(16, 2);
+        this.lastShot = Date.now() - 1000; // 1s ago
+
+        var gun = this;
+        var player = Crafty.single('Player');
+
+        Crafty.single('GlobalClickHandler')
+            .whileMouseDown(function(x, y) {
+                gun.fire();
+            })
     },
 
     fire: function()
@@ -47,6 +59,7 @@ Crafty.c('Gun', {
         }
     }
 });
+
 
 Crafty.c('Bullet', {
     init: function() {
