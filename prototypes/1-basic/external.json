@@ -4,6 +4,7 @@ externs = {
     
     "min_meteor_monsters": 3,
     "max_meteor_monsters": 5,
+    "max_meteors_per_wave": 3,
     
     "monster_velocity_min": 50,
     "monster_velocity_max": 75,
