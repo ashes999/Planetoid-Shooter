@@ -1,10 +1,12 @@
 externs = {
+    "max_meteors_per_wave": 3,
     "lava_damage": 25,
     "disable_images": false,    
     
     "min_meteor_monsters": 3,
     "max_meteor_monsters": 5,
-    "max_meteors_per_wave": 3,
+    "min_meteor_extra_monsters": 1,
+    "max_meteor_extra_monsters": 3,
     
     "monster_velocity_min": 50,
     "monster_velocity_max": 75,

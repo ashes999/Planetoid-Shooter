@@ -15,17 +15,30 @@ Crafty.c('Meteor', {
             console.log("A meteor lands!");
             Crafty.single('Stats').meteorsSeen++;
             meteor.landed = true;
+            
             var numMonsters = randomBetween(config('min_meteor_monsters'), config('max_meteor_monsters'));
             for (var i = 0; i < numMonsters; i++) {
-                Crafty.e('Monster').spawn(meteor);
+                Crafty.e('Monster').spawnAround(meteor);
             }
-            this.color('#ff9911');
+            
+            meteor.randomMonstersLeft = randomBetween(config('min_meteor_extra_monsters'), config('max_meteor_extra_monsters'));
+            meteor.nextRandomMonster = Date.now() + randomBetween(5000, 10000); //5-10s later
+            
+            meteor.bind('EnterFrame', function() {
+                if (meteor.randomMonstersLeft > 0 && Date.now() > meteor.nextRandomMonster) {
+                    Crafty.e('Monster').move(meteor.x + (meteor.w / 2), meteor.y + (meteor.h / 2));
+                    meteor.randomMonstersLeft -= 1;
+                    meteor.nextRandomMonster = Date.now() + randomBetween(5000, 10000); //5-10s later
+                }
+            });
+            
+            meteor.color('#ff9911');
         });
 
         this.collide('Player', function(data) {
             if (meteor.landed == true) {
                 var now = Date.now();
-                if (now - meteor.lastHurtPlayer >= 1000) { // 1s or monster_damage
+                if (now - meteor.lastHurtPlayer >= 1000) { // 1s
                     meteor.lastHurtPlayer = now;
                     data[0].obj.getHurt(config('lava_damage'));
                 }
@@ -46,6 +59,22 @@ Crafty.c('Monster', {
             monster.die();
             Crafty.single('Player').getHurt(monster.damage);
         });
+        
+        this.speed = randomBetween(config('monster_velocity_min'), config('monster_velocity_max'));
+        
+        var player = Crafty.single('Player');
+
+        // Track the player. CLever trick uses a fixed velocity
+        // to calculate travel time, then move the appropriate distance.
+        this.bind('EnterFrame', function() {
+            // root(x^2 + y^2)
+            var distance = Math.pow(Math.abs(monster.x - player.x), 2) +
+                Math.pow(Math.abs(monster.y - player.y), 2);
+            distance = Math.pow(distance, 0.5);
+            
+            var travelTime = distance / monster.speed;
+            monster.move(player.x, player.y, travelTime);
+        })
     },
 
     getHurt: function(bullet) {
@@ -61,10 +90,10 @@ Crafty.c('Monster', {
         return this.hurtBy.indexOf(bullet) == -1;
     },
 
-    spawn: function(meteor) {
-        this.speed = randomBetween(config('monster_velocity_min'), config('monster_velocity_max'));
+    // Spawn close to a meteor
+    spawnAround: function(meteor) {
 
-        // Pick distance
+        // Pick distance to meteor
         var xDistance = randomBetween(50, 100);
         var yDistance = randomBetween(25, 50);
 
@@ -76,15 +105,6 @@ Crafty.c('Monster', {
         }
 
         this.x = meteor.x + xDistance + (xDistance > 0 ? meteor.w : 0);
-        this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);
-        var self = this;
-        var player = Crafty.single('Player');
-
-        this.bind('EnterFrame', function() {
-            var distance = Math.pow(Math.abs(self.x - player.x), 2) + Math.pow(Math.abs(self.y - player.y), 2);
-            distance = Math.pow(distance, 0.5);
-            var travelTime = distance / self.speed;
-            this.move(player.x, player.y, travelTime);
-        })
+        this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);        
     }
 })
