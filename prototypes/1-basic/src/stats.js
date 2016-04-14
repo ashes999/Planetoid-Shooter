@@ -6,7 +6,8 @@ Crafty.c('Stats', {
    },
    
    showGameOver: function() {
-       Crafty.e('Text2, FollowCamera').move(100, 100).fontSize(48).text('GAME OVER! You reached wave ' + this.wave);
+       Crafty.e('Text2, FollowCamera').move(100, 100).fontSize(48).text('GAME OVER!');
+       console.log('You reached wave ' + this.wave);
        console.log("Meteors Seen: " + this.meteorsSeen);
        console.log("Monsters Killed: " + this.monstersKilled);       
    }

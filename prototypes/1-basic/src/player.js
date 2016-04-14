@@ -2,7 +2,7 @@ Crafty.c('Player', {
     init: function() {
         this.health = 100;
         this.requires('Actor').color('red').controllable(100).collideWith('Wall');
-        Crafty.e('MachineGun');
+        Crafty.e('PlasmaGun');
     },
     getHurt: function(damage) {
         this.health -= damage;

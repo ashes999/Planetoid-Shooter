@@ -16,7 +16,7 @@ Crafty.c('MeteorManager', {
                 
                 var numMeteors = randomBetween(1, config('max_meteors_per_wave') + 1);
                 // On wave n, don't get more than n meteors
-                numMeteors = Math.max(numMeteors, Crafty.single('Stats').wave));
+                numMeteors = Math.max(numMeteors, Crafty.single('Stats').wave);
                 
                 for (var i = 0; i < numMeteors; i++) {
                     // space them 3s apart

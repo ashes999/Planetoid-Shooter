@@ -90,24 +90,30 @@ Crafty.c('PlasmaGun', {
     },
 
     fire: function() {
-        this.charges = 0;
-        this.bullet.unbind('EnterFrame', this.centerOverPlayer);
+        if (this.charges >= 10) {
+            this.bullet.unbind('EnterFrame', this.centerOverPlayer);
+            
+            var gun = Crafty.first('PlasmaGun');
+            var player = Crafty.first('Player');
+            if (gun == null || player == null) { return; }
+                
+            var angleInRadians = gun.rotation * Math.PI / 180;
+            var vx = config('plasma_speed') * Math.cos(angleInRadians);
+            var vy = config('plasma_speed') * Math.sin(angleInRadians);
+            this.bullet.velocity(vx, vy);
+        } else {
+            this.bullet.die();
+        }
         
-        var gun = Crafty.first('PlasmaGun');
-        var player = Crafty.first('Player');
-        if (gun == null || player == null) { return; }
-             
-        var angleInRadians = gun.rotation * Math.PI / 180;
-        var vx = config('plasma_speed') * Math.cos(angleInRadians);
-        var vy = config('plasma_speed') * Math.sin(angleInRadians);
-        this.bullet.velocity(vx, vy);
+        this.charges = 0;        
         this.bullet = null;
     },
     
     centerOverPlayer: function() {
-        var player = Crafty.single("Player");
-        var gun = Crafty.single("PlasmaGun"); 
+        var player = Crafty.first("Player");
+        var gun = Crafty.first("PlasmaGun"); 
         var bullet = Crafty.last("PlasmaBullet");
+        if (player == null || gun == null) { return; }
         bullet.move(player.x + ((player.w - bullet.w) / 2), player.y - 8 - bullet.h);
         bullet.size(8 + gun.charges, 8 + gun.charges);
     }

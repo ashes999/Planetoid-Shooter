@@ -62,11 +62,12 @@ Crafty.c('Monster', {
         
         this.speed = randomBetween(config('monster_velocity_min'), config('monster_velocity_max'));
         
-        var player = Crafty.single('Player');
-
-        // Track the player. CLever trick uses a fixed velocity
+        // Track the player. Clever trick uses a fixed velocity
         // to calculate travel time, then move the appropriate distance.
         this.bind('EnterFrame', function() {
+            var player = Crafty.first('Player');
+            if (player == null) { return; }
+            
             // root(x^2 + y^2)
             var distance = Math.pow(Math.abs(monster.x - player.x), 2) +
                 Math.pow(Math.abs(monster.y - player.y), 2);
