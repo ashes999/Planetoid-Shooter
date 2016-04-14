@@ -166,7 +166,7 @@ Crafty.c('PlasmaBullet', {
        var plasma = this;
        
        this.bind('EnterFrame', function() {
-          if (plasma.fired == true && randomBetween(0, 100) <= 10) {
+          if (plasma.fired == true && randomBetween(0, 100) <= 15) {
               Crafty.e('Lava').move(plasma.x, plasma.y);
           } 
        });

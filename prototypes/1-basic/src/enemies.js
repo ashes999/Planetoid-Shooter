@@ -112,16 +112,20 @@ Crafty.c('Monster', {
 
 Crafty.c('Lava', {
     init: function() {
-        var s = randomBetween(10, 20);
+        var s = randomBetween(20, 35);
         this.requires('Actor').size(s, s).color('#ff6600');
         var lava = this;
         this.collide('Player', function(data) {
             var player = data[0].obj;
             var now = Date.now();
             if (now - player.lastHurtByLava >= 1000) {
-                player.getHurt(10);
+                player.getHurt(config('lava_damage'));
                 player.lastHurtByLava = now;
             }
         });
+        
+        // Fix performance problem caused by too much lava over time
+        var lavaTime = randomBetween(config('lava_min_time'), config('lava_max_time'));
+        this.tween({ w: 0, h: 0 }, lavaTime).bind('TweenEnd', function() { lava.die(); });
     }
 });
