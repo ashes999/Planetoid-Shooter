@@ -19,5 +19,5 @@ externs = {
     "bullet_damage": 10,    
     
     "plasma_speed": 20,
-    "plasma_damage": 25
+    "plasma_damage": 50
 }

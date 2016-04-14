@@ -91,6 +91,7 @@ Crafty.c('PlasmaGun', {
 
     fire: function() {
         if (this.charges >= 10) {
+            this.bullet.fired = true; // generate lava
             this.bullet.unbind('EnterFrame', this.centerOverPlayer);
             
             var gun = Crafty.first('PlasmaGun');
@@ -154,5 +155,14 @@ Crafty.c('PlasmaBullet', {
        this.requires('Bullet').color('yellow').size(8, 8);
        this.damage = config('plasma_damage');
        this.move(50, 50); // without this, bullet is stuck behind a wall
+       this.fired = false;
+       
+       var plasma = this;
+       
+       this.bind('EnterFrame', function() {
+          if (plasma.fired == true && randomBetween(0, 100) <= 10) {
+              Crafty.e('Lava').move(plasma.x, plasma.y);
+          } 
+       });
    } 
 });

@@ -109,3 +109,19 @@ Crafty.c('Monster', {
         this.y = meteor.y + yDistance + (yDistance > 0 ? meteor.h : 0);        
     }
 })
+
+Crafty.c('Lava', {
+    init: function() {
+        var s = randomBetween(10, 20);
+        this.requires('Actor').size(s, s).color('#ff6600');
+        var lava = this;
+        this.collide('Player', function(data) {
+            var player = data[0].obj;
+            var now = Date.now();
+            if (now - player.lastHurtByLava >= 1000) {
+                player.getHurt(10);
+                player.lastHurtByLava = now;
+            }
+        });
+    }
+});
