@@ -4,6 +4,16 @@ Crafty.c('Player', {
         this.lastHurtByLava = Date.now();
         this.requires('Actor').color('red').controllable(100).collideWith('Wall');
         Crafty.e('MachineGun');
+        
+        Crafty.bind('MouseWheelScroll', function() {
+            if (Crafty.first('PlasmaGun') != null) {
+                Crafty.single('PlasmaGun').die();
+                Crafty.e('MachineGun');
+            } else if (Crafty.first('MachineGun') != null) {
+                Crafty.single('MachineGun').die();
+                Crafty.e('PlasmaGun');
+            }
+        })
     },
     
     getHurt: function(damage) {

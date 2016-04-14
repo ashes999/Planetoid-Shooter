@@ -11,15 +11,18 @@ Crafty.c('BaseGun', {
             gun.move(player.x + player.w / 2, player.y + (player.h / 2));
         });
 
-        Crafty.e('GlobalClickHandler')
-            .onMove(function(x, y) {
-                var dx = x - gun.x;
-                var dy = y - gun.y;
+        var globalHandler = Crafty.first('GlobalClickHandler');
+        if (globalHandler == null) {
+            globalHandler = Crafty.e('GlobalClickHandler');
+        }
+        globalHandler.onMove(function(x, y) {
+            var dx = x - gun.x;
+            var dy = y - gun.y;
 
-                // http://stackoverflow.com/questions/7586063/how-to-calculate-the-angle-between-a-line-and-the-horizontal-axis
-                var angle = Math.atan2(dy, dx) * 180 / Math.PI;
-                gun.rotation = angle;
-            });
+            // http://stackoverflow.com/questions/7586063/how-to-calculate-the-angle-between-a-line-and-the-horizontal-axis
+            var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+            gun.rotation = angle;
+        });
     }
 });
 
@@ -103,7 +106,10 @@ Crafty.c('PlasmaGun', {
             var vy = config('plasma_speed') * Math.sin(angleInRadians);
             this.bullet.velocity(vx, vy);
         } else {
-            this.bullet.die();
+            if (this.bullet != null) {
+                // Wierd things happen when switching guns
+                this.bullet.die();                
+            }
         }
         
         this.charges = 0;        
