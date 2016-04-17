@@ -7,13 +7,14 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 
-import nebula.NebulaState;
+import deengames.planetoid.state.PlanetoidState;
 
-class PlayState extends NebulaState
+class PlayState extends PlanetoidState
 {
 	override public function create():Void
 	{
 		super.create();
+        this.entityFactory.createPlayer();
 	}
 
 	override public function update(elapsed:Float):Void

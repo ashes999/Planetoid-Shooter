@@ -4,6 +4,8 @@ import ash.tick.ITickProvider;
 import ash.tick.FrameTickProvider;
 import ash.core.Engine;
 
+import deengames.planetoid.factory.EntityFactory;
+
 import flixel.FlxState;
 
 class NebulaState extends FlxState
