@@ -8,6 +8,8 @@ import deengames.planetoid.factory.EntityFactory;
 
 import flixel.FlxState;
 
+import nebula.ecs.system.RenderSystem;
+
 class NebulaState extends FlxState
 {
     private var engine:Engine;
@@ -20,6 +22,7 @@ class NebulaState extends FlxState
         this.tickProvider = new FrameTickProvider(Main.instance);
         this.tickProvider.add(engine.update);
         this.tickProvider.start();
+        engine.addSystem(new RenderSystem(this), 0);
     }
     
     override public function update(elapsed:Float):Void
