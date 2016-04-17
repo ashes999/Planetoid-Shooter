@@ -1,7 +1,7 @@
-package pulsar.ecs.system;
+package nebula.ecs.system;
 
-import pulsar.ecs.component.AbstractComponent;
-import pulsar.ecs.Container;
+import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.Container;
 
 // Base class, don't use directly.
 class AbstractSystem

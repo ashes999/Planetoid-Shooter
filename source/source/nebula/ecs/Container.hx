@@ -1,7 +1,7 @@
-package pulsar.ecs;
+package nebula.ecs;
 
-import pulsar.ecs.component.AbstractComponent;
-import pulsar.ecs.system.AbstractSystem;
+import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.system.AbstractSystem;
 
 // A collection of components and systems. Use this per screen or whatever.
 class Container

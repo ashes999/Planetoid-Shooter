@@ -7,12 +7,12 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 
-import pulsar.ecs.Container;
-import pulsar.ecs.Entity;
-import pulsar.ecs.component.KeyboardInputComponent;
-import pulsar.ecs.component.SpriteComponent;
-import pulsar.ecs.system.DrawSpriteSystem;
-import pulsar.ecs.system.KeyboardInputMovementSystem;
+import nebula.ecs.Container;
+import nebula.ecs.Entity;
+import nebula.ecs.component.KeyboardInputComponent;
+import nebula.ecs.component.SpriteComponent;
+import nebula.ecs.system.DrawSpriteSystem;
+import nebula.ecs.system.KeyboardInputMovementSystem;
 
 class PlayState extends FlxState
 {

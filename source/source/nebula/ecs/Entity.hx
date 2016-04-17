@@ -1,7 +1,7 @@
-package pulsar.ecs;
+package nebula.ecs;
 
-import pulsar.ecs.component.AbstractComponent;
-import pulsar.ecs.Container;
+import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.Container;
 
 
 // DO NOT USE THIS CLASS. It's just a convenient way to get groups of related

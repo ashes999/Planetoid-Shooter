@@ -1,9 +1,9 @@
-package pulsar.ecs.system;
+package nebula.ecs.system;
 
-import pulsar.ecs.Container;
-import pulsar.ecs.component.AbstractComponent;
-import pulsar.ecs.component.SpriteComponent;
-import pulsar.ecs.Entity;
+import nebula.ecs.Container;
+import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.SpriteComponent;
+import nebula.ecs.Entity;
 
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -28,7 +28,6 @@ class DrawSpriteSystem extends AbstractSystem
             {
                 var s:FlxSprite = new FlxSprite();
                 s.loadGraphic(component.image);
-                trace('loaded ${component.image}');
                 component.sprite =  s;
                 this.state.add(s);
             }

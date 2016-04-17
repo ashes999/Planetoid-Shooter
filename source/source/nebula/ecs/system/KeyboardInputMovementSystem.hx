@@ -1,10 +1,10 @@
-package pulsar.ecs.system;
+package nebula.ecs.system;
 
-import pulsar.ecs.Container;
-import pulsar.ecs.Entity;
-import pulsar.ecs.component.AbstractComponent;
-import pulsar.ecs.component.SpriteComponent;
-import pulsar.ecs.component.KeyboardInputComponent;
+import nebula.ecs.Container;
+import nebula.ecs.Entity;
+import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.SpriteComponent;
+import nebula.ecs.component.KeyboardInputComponent;
 
 import flixel.FlxG;
 import flixel.FlxSprite;

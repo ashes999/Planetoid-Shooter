@@ -1,4 +1,4 @@
-package pulsar.ecs.component;
+package nebula.ecs.component;
 
 import flixel.FlxSprite;
 
