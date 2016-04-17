@@ -7,7 +7,9 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 
-class PlayState extends FlxState
+import nebula.NebulaState;
+
+class PlayState extends NebulaState
 {
 	override public function create():Void
 	{
