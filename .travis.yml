@@ -9,4 +9,4 @@ install:
   - haxelib install openfl > /dev/null
   - haxelib install noor > /dev/null
   - haxelib list
-  - lime test source/test neko
+  - haxelib run lime test source/test neko
