@@ -3,10 +3,12 @@ haxe:
   - "3.2.1"
 neko: "2.0.0"
 install:
+  - haxelib install noor > /dev/null
   - haxelib install munit > /dev/null
   - haxelib install hamcrest > /dev/null
+  - haxelib install flixel > /dev/null
   - haxelib install lime > /dev/null
   - haxelib install openfl > /dev/null
-  - haxelib install noor > /dev/null
+
   - haxelib list
   - haxelib run lime test source/test neko
