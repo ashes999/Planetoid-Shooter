@@ -3,4 +3,5 @@ haxe:
   - "3.2.1"
 neko: "2.0.0"
 script:
-  cd test; lime test neko
+  cd source/test;
+  lime test neko
