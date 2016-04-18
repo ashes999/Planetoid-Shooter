@@ -10,6 +10,8 @@ import nebula.ecs.Entity;
 
 class Player
 {
+    // TODO: replace with a fluent interface
+    // eg. new Entity().color(255, 0, 0).size(32, 32).move(0, 0).moveToKeyboard(100);
     public static function create():Entity
     {
         return new Entity()
