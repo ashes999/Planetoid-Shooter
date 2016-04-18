@@ -97,6 +97,11 @@ class DummySystem extends nebula.ecs.system.AbstractSystem
     
     override public function entityChanged(e:Entity):Void
     {
+        // Causes a serialization infinite loop
+        // To get around this, null out the container   
+        // If this breaks tests later, maybe I can use
+        // a dummy/test entity class with everything but the container.     
         this.whoChanged = e;
+        this.whoChanged.container = null;
     }
 }
