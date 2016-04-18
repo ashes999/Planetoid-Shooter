@@ -3,8 +3,8 @@ package nebula.ecs.system;
 import nebula.ecs.Container;
 import nebula.ecs.Entity;
 import nebula.ecs.component.AbstractComponent;
-import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.component.KeyboardInputComponent;
+import nebula.ecs.component.PositionComponent;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -17,7 +17,7 @@ class KeyboardInputMovementSystem extends AbstractSystem
     
     public function new(container:Container)
     {
-        super(container, [KeyboardInputComponent, SpriteComponent]);
+        super(container, [KeyboardInputComponent, PositionComponent]);
     }
         
     override public function update(elapsed:Float):Void
@@ -25,7 +25,7 @@ class KeyboardInputMovementSystem extends AbstractSystem
         for (entity in this.entities)
         {
             var component:KeyboardInputComponent = entity.get(KeyboardInputComponent);
-            var sprite:SpriteComponent = entity.get(SpriteComponent);
+            var position:PositionComponent = entity.get(PositionComponent);
                 
             var dx:Float = 0;
             var dy:Float = 0;
@@ -49,9 +49,8 @@ class KeyboardInputMovementSystem extends AbstractSystem
                 dy = movement;
             }
             
-            sprite.x += dx;
-            sprite.y += dy;
-                           
+            position.x += dx;
+            position.y += dy;
         }
     }
 }

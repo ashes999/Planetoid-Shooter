@@ -2,6 +2,7 @@ package nebula.ecs.system;
 
 import nebula.ecs.Container;
 import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Entity;
 
@@ -15,7 +16,7 @@ class DrawSpriteSystem extends AbstractSystem
     
     public function new(container:Container, state:FlxState)
     {
-        super(container, [SpriteComponent]);
+        super(container, [SpriteComponent, PositionComponent]);
         this.state = state;
     }
     
@@ -23,17 +24,18 @@ class DrawSpriteSystem extends AbstractSystem
     {
         for (entity in this.entities)
         {
-            var component:SpriteComponent = entity.get(SpriteComponent);            
-            if (component.sprite == null)
+            var sprite:SpriteComponent = entity.get(SpriteComponent);            
+            if (sprite.sprite == null)
             {
                 var s:FlxSprite = new FlxSprite();
-                s.loadGraphic(component.image);
-                component.sprite =  s;
+                s.loadGraphic(sprite.image);
+                sprite.sprite =  s;
                 this.state.add(s);
             }
             
-            component.sprite.x = component.x;
-            component.sprite.y = component.y;
+            var position:PositionComponent = entity.get(PositionComponent);
+            sprite.sprite.x = position.x;
+            sprite.sprite.y = position.y;
         }
     }
 }

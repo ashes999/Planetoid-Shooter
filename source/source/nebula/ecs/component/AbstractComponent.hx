@@ -7,7 +7,7 @@ import flixel.FlxSprite;
 // here yet; it just saves us from using Dynamic.
 class AbstractComponent
 {
-    private function new()
+    public function new()
     {
     }
 }
