@@ -5,7 +5,7 @@ A 2D, top-down sci-fi shooter with a multiple gameplay modes. Survive on a small
 ## Nebula
 Nebula is a batteries-included extension for HaxeFlixel. It includes an entity-component framework/system, and others.
 
-Small example of a sprite that responds to keyboard movement:
+Small example of a state with a orange square that responds to keyboard movement:
 ```
 class PlayState extends FlxState
 {
@@ -14,11 +14,10 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-        container.addSystem(new DrawSpriteSystem(container, this))
-            .addSystem(new KeyboardInputMovementSystem(container));
+        container.addDefaultSystems(this);
         
         container.add(new Entity(container)
-            .add(new SpriteComponent("assets/images/butterfly.png"))
+            .add(new ColourComponent(255, 128, 0, 48, 48))
             .add(new KeyboardInputComponent(100)));
 	}
 
@@ -39,7 +38,8 @@ class DrawSpriteSystem extends AbstractSystem
     
     public function new(container:Container, state:FlxState)
     {
-        super(container, [SpriteComponent]);
+        // Get all entities that have both a sprite and a position
+        super(container, [SpriteComponent, PositionComponent]);
         this.state = state;
     }
     
@@ -56,8 +56,9 @@ class DrawSpriteSystem extends AbstractSystem
                 this.state.add(s);
             }
             
-            component.sprite.x = component.x;
-            component.sprite.y = component.y;
+            var pos:PositionComponent = entity.get(PositionComponent);
+            component.sprite.x = pos.x;
+            component.sprite.y = pos.y;
         }
     }
 }

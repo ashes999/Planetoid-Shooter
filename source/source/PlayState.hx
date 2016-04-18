@@ -10,9 +10,6 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 
 import nebula.ecs.Container;
-import nebula.ecs.system.DrawSpriteSystem;
-import nebula.ecs.system.DrawColourSystem;
-import nebula.ecs.system.KeyboardInputMovementSystem;
 
 class PlayState extends FlxState
 {
@@ -21,10 +18,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-        container.addSystem(new DrawSpriteSystem(container, this))
-            .addSystem(new DrawColourSystem(container, this))
-            .addSystem(new KeyboardInputMovementSystem(container));
-        
+        container.addDefaultSystems(this);
         container.add(Player.create(container));
 	}
 
