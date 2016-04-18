@@ -1,13 +1,10 @@
 package nebula.ecs.system;
 
 import nebula.ecs.component.AbstractComponent;
-import nebula.ecs.Container;
 
 // Base class, don't use directly.
 class AbstractSystem
 {
-    private var container:Container;
-    
     // component types we care about. An entity must have all of these for us to manage them.
     private var componentTypes:Array<Class<AbstractComponent>> = [];
     
@@ -16,9 +13,8 @@ class AbstractSystem
     
     // First function is our usual container, second is a list of components. We only care
     // about entities that have all those components.
-    private function new(container:Container, componentTypes:Array<Class<AbstractComponent>>)
+    private function new(componentTypes:Array<Class<AbstractComponent>>)
     {
-        this.container = container;
         this.componentTypes = componentTypes;
     }
     

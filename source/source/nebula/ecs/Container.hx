@@ -21,13 +21,6 @@ class Container
         this.systems = new Array<AbstractSystem>();
     }
     
-    public function addSystem(s:AbstractSystem):Container
-    {
-        this.systems.push(s);
-        s.create();
-        return this;
-    }
-    
     public function update(elapsed:Float):Void
     {
         for (system in systems)
@@ -36,8 +29,16 @@ class Container
         }
     }
     
-    public function add(entity:Entity):Void
+    public function addSystem(system:AbstractSystem):Container
     {
+        this.systems.push(system);
+        system.create();
+        return this;
+    }
+    
+    public function addEntity(entity:Entity):Void
+    {
+        entity.container = this;
         this.entities.push(entity);
         for (system in systems)
         {
@@ -69,8 +70,8 @@ class Container
     
     public function addDefaultSystems(state:FlxState):Void
     {
-        this.addSystem(new DrawSpriteSystem(this, state))
-            .addSystem(new DrawColourSystem(this, state))
-            .addSystem(new KeyboardInputMovementSystem(this));
+        this.addSystem(new DrawSpriteSystem(state))
+            .addSystem(new DrawColourSystem(state))
+            .addSystem(new KeyboardInputMovementSystem());
     }
 }

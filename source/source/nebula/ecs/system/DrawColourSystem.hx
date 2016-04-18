@@ -4,7 +4,6 @@ import flixel.util.FlxColor;
 import flixel.FlxSprite;
 import flixel.FlxState;
 
-import nebula.ecs.Container;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.ColourComponent;
 import nebula.ecs.component.PositionComponent;
@@ -14,9 +13,9 @@ class DrawColourSystem extends AbstractSystem
 {
     private var state:FlxState;
     
-    public function new(container:Container, state:FlxState)
+    public function new(state:FlxState)
     {
-        super(container, [ColourComponent, PositionComponent]);
+        super([ColourComponent, PositionComponent]);
         this.state = state;
     }
     

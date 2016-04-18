@@ -4,11 +4,11 @@ import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.Container;
 
 
-// DO NOT USE THIS CLASS. It's just a convenient way to get groups of related
+// DO NOT USE THIS CLASS DIRECTLY. It's just a convenient way to get groups of related
 // components together for systems to act on. Srsly.
 class Entity
 {
-    private var container:Container;
+    public var container(null, default):Container;
     private var components:Map<String, AbstractComponent>;
     private var tags(default, null):Array<String>;
     

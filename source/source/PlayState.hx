@@ -19,7 +19,7 @@ class PlayState extends FlxState
 	{
 		super.create();
         container.addDefaultSystems(this);
-        container.add(Player.create(container));
+        container.addEntity(Player.create(container));
 	}
 
 	override public function update(elapsed:Float):Void

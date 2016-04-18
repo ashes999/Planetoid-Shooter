@@ -1,6 +1,5 @@
 package nebula.ecs.system;
 
-import nebula.ecs.Container;
 import nebula.ecs.Entity;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.KeyboardInputComponent;
@@ -15,9 +14,9 @@ class KeyboardInputMovementSystem extends AbstractSystem
 {
     private var state:FlxState;
     
-    public function new(container:Container)
+    public function new()
     {
-        super(container, [KeyboardInputComponent, PositionComponent]);
+        super([KeyboardInputComponent, PositionComponent]);
     }
         
     override public function update(elapsed:Float):Void
