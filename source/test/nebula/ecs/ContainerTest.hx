@@ -44,7 +44,7 @@ class ContainerTest
         container.addEntity(expected);
         Assert.that(container.entities.length, Is.equalTo(1));
         var actual = container.entities[0];
-        Assert.areEqual(expected, actual);
+        Assert.areEqual(expected, actual, "Expected/actual mismatch");
     }
     
     @Test
@@ -75,8 +75,8 @@ class ContainerTest
         var expected = new Entity();
         container.entityChanged(new Entity());
         container.entityChanged(expected);
-        Assert.areEqual(expected, s1.whoChanged);
-        Assert.areEqual(expected, s2.whoChanged);
+        Assert.areEqual(expected, s1.whoChanged, "Expected/actual mismatch");
+        Assert.areEqual(expected, s2.whoChanged, "Expected/actual mismatch");
     }
 }
 
@@ -97,11 +97,6 @@ class DummySystem extends nebula.ecs.system.AbstractSystem
     
     override public function entityChanged(e:Entity):Void
     {
-        // Causes a serialization infinite loop
-        // To get around this, null out the container   
-        // If this breaks tests later, maybe I can use
-        // a dummy/test entity class with everything but the container.     
         this.whoChanged = e;
-        this.whoChanged.container = null;
     }
 }
