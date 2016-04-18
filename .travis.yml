@@ -2,6 +2,12 @@ language: haxe
 haxe:
   - "3.2.1"
 neko: "2.0.0"
+install:
+  - haxelib install munit > /dev/null
+  - haxelib install hamcrest > /dev/null
+  - haxelib install lime > /dev/null
+  - haxelib install openfl > /dev/null
+  - haxelib install noor > /dev/null
 script:
   cd source/test;
   lime test neko
