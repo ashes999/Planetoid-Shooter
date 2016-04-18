@@ -12,11 +12,13 @@ import nebula.ecs.system.KeyboardInputMovementSystem;
 // A collection of components and systems. Use this per screen or whatever.
 class Container
 {
+    public static var instance(default, null):Container;
     public var entities:Array<Entity>;
     public var systems:Array<AbstractSystem>;
     
     public function new()
     {
+        instance = this;
         this.entities = new Array<Entity>();
         this.systems = new Array<AbstractSystem>();
     }

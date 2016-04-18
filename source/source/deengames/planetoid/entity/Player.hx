@@ -10,9 +10,9 @@ import nebula.ecs.Entity;
 
 class Player
 {
-    public static function create(container:Container):Entity
+    public static function create():Entity
     {
-        return new Entity(container)
+        return new Entity()
             .add(new ColourComponent(255, 0, 0, 32, 32))
             //.add(new SpriteComponent('assets/images/butterfly.png'))
             .add(new PositionComponent(0, 0))
