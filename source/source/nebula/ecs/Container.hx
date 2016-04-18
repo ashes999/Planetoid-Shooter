@@ -48,20 +48,6 @@ class Container
         }
     }
     
-    // Get all entities with a component
-    public function get(componentClass:Class<AbstractComponent>):Array<Entity>
-    {
-        var toReturn:Array<Entity> = [];
-        for (e in this.entities)
-        {
-            if (e.has(componentClass))
-            {
-                toReturn.push(e);
-            }
-        }
-        return toReturn;
-    }
-    
     public function entityChanged(entity:Entity):Void
     {
         for (system in this.systems)
