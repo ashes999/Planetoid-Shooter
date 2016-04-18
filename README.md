@@ -3,9 +3,19 @@
 A 2D, top-down sci-fi shooter with a multiple gameplay modes. Survive on a small planetoid as meteors full of aliens land. Defeat and master each different and challenging enemy with an array of different weapons.
 
 ## Nebula
-Nebula is a batteries-included extension for HaxeFlixel. It includes an entity-component framework/system, and others.
+Nebula is a batteries-included extension for HaxeFlixel. It includes an entity-component framework (and pre-built system), and others.
 
+The entity-component system is inspired by the [Ash framework](http://ashframework.org/)'s design philosophy:
+- Components are pure data (no code)
+- Entities are just bags of components
+- Systems are thin and operate on just what they need
+
+Unlike Ash, Nebula doesn't use nodes (which seem like boilerplate code), with the trade-off that systems operate directly on entities.
+
+Ash is also a framework; Nebula includes a set of systems for writing HaxeFlixel games. See the [list of systems](tree/gh-pages/source/source/nebula/ecs/system) in code.
+  
 Small example of a state with a orange square that responds to keyboard movement:
+
 ```
 class PlayState extends FlxState
 {
