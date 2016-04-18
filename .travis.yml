@@ -4,11 +4,8 @@ haxe:
 neko: "2.0.0"
 install:
   - haxelib git noor https://github.com/ashes999/noor > /dev/null
-  - haxelib install munit > /dev/null
   - haxelib install hamcrest > /dev/null
   - haxelib install flixel > /dev/null
-  - haxelib install lime > /dev/null
-  - haxelib install openfl > /dev/null
   - haxelib list
 script:
   - haxelib run lime test source/test neko
