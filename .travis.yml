@@ -8,5 +8,5 @@ install:
   - haxelib install lime > /dev/null
   - haxelib install openfl > /dev/null
   - haxelib install noor > /dev/null
-script:
-  lime test source/test neko
+  - haxelib list
+  - lime test source/test neko
