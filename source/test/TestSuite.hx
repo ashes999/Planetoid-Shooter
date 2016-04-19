@@ -1,5 +1,6 @@
 import massive.munit.TestSuite;
 
+import nebula.ecs.EntityTest;
 import nebula.ecs.ContainerTest;
 
 /**
@@ -14,6 +15,7 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
+		add(nebula.ecs.EntityTest);
 		add(nebula.ecs.ContainerTest);
 	}
 }

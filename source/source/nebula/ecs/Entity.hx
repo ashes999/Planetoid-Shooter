@@ -8,7 +8,7 @@ import nebula.ecs.Container;
 // components together for systems to act on. Srsly.
 class Entity
 {
-    public var container(null, default):Container;
+    public var container(default, default):Container;
     private var components:Map<String, AbstractComponent>;
     private var tags(default, null):Array<String>;
     
