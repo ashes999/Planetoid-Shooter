@@ -2,6 +2,7 @@ import massive.munit.TestSuite;
 
 import nebula.ecs.EntityTest;
 import nebula.ecs.ContainerTest;
+import nebula.ecs.system.AbstractSystemTest;
 
 /**
  * Auto generated Test Suite for MassiveUnit.
@@ -17,5 +18,6 @@ class TestSuite extends massive.munit.TestSuite
 
 		add(nebula.ecs.EntityTest);
 		add(nebula.ecs.ContainerTest);
+		add(nebula.ecs.system.AbstractSystemTest);
 	}
 }

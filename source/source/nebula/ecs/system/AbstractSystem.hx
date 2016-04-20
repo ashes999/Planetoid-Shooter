@@ -18,10 +18,10 @@ class AbstractSystem
         this.componentTypes = componentTypes;
     }
     
-    // Everything's initialized
+    // (virtual) Called after everything's initialized.
     public function create():Void { } 
     
-    // Called every update loop
+    // (virtual) Called every update loop
     public function update(elapsed:Float):Void { }
     
     // A new entity was added, or an existing entity was changed.

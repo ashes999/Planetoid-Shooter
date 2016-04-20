@@ -46,23 +46,3 @@ class EntityTest
         Assert.isFalse(e.has(StringComponent));        
     }
 }
-
-class StringComponent extends AbstractComponent
-{
-    public var value:String;
-    public function new(value:String)
-    { 
-        super();
-        this.value = value;
-    }
-}
-
-class IntComponent extends AbstractComponent
-{
-    public var value:Int;
-    public function new(value:Int)
-    { 
-        super();
-        this.value = value;
-    }
-}
