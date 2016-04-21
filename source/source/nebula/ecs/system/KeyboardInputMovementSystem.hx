@@ -30,6 +30,7 @@ class KeyboardInputMovementSystem extends AbstractSystem
             var dy:Float = 0;
             var movement:Float = component.moveSpeed * elapsed;
             
+            // TODO: extract key pressing to a method, so we can override it for testing
             if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A)
             {
                 dx = -movement;
