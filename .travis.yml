@@ -8,4 +8,5 @@ install:
   - haxelib install flixel > /dev/null
   - haxelib list
 script:
+  - haxelib run munit gen
   - haxelib run lime test source/test neko

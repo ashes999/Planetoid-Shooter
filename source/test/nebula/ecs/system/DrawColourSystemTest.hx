@@ -37,7 +37,7 @@ class DrawColourSystemTest
         system.entityChanged(e);
         Assert.that(e.get(ColourComponent).sprite, Is.equalTo(null));
         system.update(0);
-        Assert.isTrue(e.get(ColourComponent).sprite != null);        
+        Assert.isTrue(e.get(ColourComponent).sprite != null);
     }
     
     @Test
