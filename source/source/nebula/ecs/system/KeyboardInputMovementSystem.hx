@@ -1,13 +1,15 @@
 package nebula.ecs.system;
 
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxState;
+import flixel.input.FlxInput.FlxInputState;
+import flixel.input.keyboard.FlxKey;
+
 import nebula.ecs.Entity;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.KeyboardInputComponent;
 import nebula.ecs.component.PositionComponent;
-
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.FlxState;
 
 // Looks for KeyboardInputComponents and moves their SpriteComponents to arrow keys or WASD
 class KeyboardInputMovementSystem extends AbstractSystem
@@ -30,21 +32,20 @@ class KeyboardInputMovementSystem extends AbstractSystem
             var dy:Float = 0;
             var movement:Float = component.moveSpeed * elapsed;
             
-            // TODO: extract key pressing to a method, so we can override it for testing
-            if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.A)
+            if (isPressed(FlxKey.LEFT) || isPressed(FlxKey.A))
             {
                 dx = -movement;
             }
-            else if (FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.D)
+            else if (isPressed(FlxKey.RIGHT) || isPressed(FlxKey.D))
             {
                 dx = movement;
             }
                 
-            if (FlxG.keys.pressed.UP || FlxG.keys.pressed.W)
+            if (isPressed(FlxKey.UP) || isPressed(FlxKey.W))            
             {
                 dy = -movement;
             }
-            else if (FlxG.keys.pressed.DOWN || FlxG.keys.pressed.S)
+            else if (isPressed(FlxKey.DOWN) || isPressed(FlxKey.S))
             {
                 dy = movement;
             }
@@ -52,5 +53,13 @@ class KeyboardInputMovementSystem extends AbstractSystem
             position.x += dx;
             position.y += dy;
         }
+    }
+    
+    // Overridable function to facilitate testing
+    // Key is an int value because Flixel defines it as such. Sigh.
+    // Well, anyway, we have to then match/know the key values in our test code.
+    private function isPressed(keyCode:Int)
+    {
+        return FlxG.keys.checkStatus(keyCode, FlxInputState.PRESSED);
     }
 }
