@@ -10,5 +10,8 @@ class FlxSprite {
     public var color:FlxColor;
     public function new() { }
     public function loadGraphic(asset:String) { } 
-    public function makeGraphic(width:Int, height:Int, color:FlxColor) { }   
+    public function makeGraphic(width:Int, height:Int, color:FlxColor) {
+        this.width = width;
+        this.height = height;
+    }   
 }

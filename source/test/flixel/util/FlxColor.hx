@@ -2,9 +2,9 @@ package flixel.util;
 
 class FlxColor
 {
-    public var red:Int;
-    public var green:Int;
-    public var blue:Int;
+    public var red:Int = 0;
+    public var green:Int = 0;
+    public var blue:Int = 0;
     
     public function new() { }
     
