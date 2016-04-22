@@ -9,8 +9,6 @@ import nebula.ecs.system.DrawSpriteSystem;
 
 using noor.Assert;
 
-// You may find this amusing. It's possible to test base/abstract class code
-// in isolation. Then, subclasses only need to test subclassed code! Awesomeness ensues.
 @:access(nebula.ecs.system.DrawSpriteSystem)
 class DrawSpriteSystemTest
 {
