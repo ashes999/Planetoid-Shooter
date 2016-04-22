@@ -30,7 +30,9 @@ class DrawSpriteSystemTest
     public function updateInitializesTheSpritesSprite()
     {
         var system = new DrawSpriteSystem(new FlxState());
-        var e = new Entity().add(new PositionComponent(0, 0)).add(new SpriteComponent("apple.png"));
+        var e = new Entity()
+            .add(new PositionComponent(0, 0))
+            .add(new SpriteComponent("assets/apple.png"));
         system.entityChanged(e);
         Assert.that(e.get(SpriteComponent).sprite, Is.equalTo(null));
         system.update(0);
@@ -41,7 +43,7 @@ class DrawSpriteSystemTest
     public function updateSetsTheSpriteCoordinatesToTheComponentsCoordinates()
     {
         var system = new DrawSpriteSystem(new FlxState());
-        var s = new SpriteComponent("ball.png");
+        var s = new SpriteComponent("assets/ball.png");
         var p = new PositionComponent(135, 208);
         var e = new Entity().add(p).add(s);
         system.entityChanged(e);
