@@ -49,7 +49,7 @@ Crafty.c('MachineGun', {
         // gun_shot_rate_ms is in milliseconds
         if ((now - gun.lastShot) > config('gun_shot_rate_ms')) {
             gun.lastShot = now;
-            
+
             var angleInRadians = gun.rotation * Math.PI / 180;
             var vx = config('bullet_speed') * Math.cos(angleInRadians);
             var vy = config('bullet_speed') * Math.sin(angleInRadians);
@@ -64,7 +64,7 @@ Crafty.c('PlasmaGun', {
     init: function() {
         this.charges = 0;
         this.bullet = null;
-        
+
         this.requires('BaseGun').color('orange').size(10, 6);
 
         var gun = this;
@@ -74,21 +74,21 @@ Crafty.c('PlasmaGun', {
             .whileMouseDown(function(x, y) {
                 gun.charge();
             }).onMouseUp(function(x, y) {
-               gun.fire(); 
+               gun.fire();
             });
     },
-    
+
     charge: function() {
         var gun = this;
         var player = Crafty.first("Player");
         if (player == null) { return; }
-        
+
         if (this.bullet == null) {
             var bullet = Crafty.e('PlasmaBullet');
             bullet.bind('EnterFrame', this.centerOverPlayer);
             this.bullet = bullet;
         }
-        
+
         this.charges = Math.min(this.charges + 1, 40);
     },
 
@@ -96,11 +96,11 @@ Crafty.c('PlasmaGun', {
         if (this.charges >= 10) {
             this.bullet.fired = true; // generate lava
             this.bullet.unbind('EnterFrame', this.centerOverPlayer);
-            
+
             var gun = Crafty.first('PlasmaGun');
             var player = Crafty.first('Player');
             if (gun == null || player == null) { return; }
-                
+
             var angleInRadians = gun.rotation * Math.PI / 180;
             var vx = config('plasma_speed') * Math.cos(angleInRadians);
             var vy = config('plasma_speed') * Math.sin(angleInRadians);
@@ -108,17 +108,17 @@ Crafty.c('PlasmaGun', {
         } else {
             if (this.bullet != null) {
                 // Wierd things happen when switching guns
-                this.bullet.die();                
+                this.bullet.die();
             }
         }
-        
-        this.charges = 0;        
+
+        this.charges = 0;
         this.bullet = null;
     },
-    
+
     centerOverPlayer: function() {
         var player = Crafty.first("Player");
-        var gun = Crafty.first("PlasmaGun"); 
+        var gun = Crafty.first("PlasmaGun");
         var bullet = Crafty.last("PlasmaBullet");
         if (player == null || gun == null) { return; }
         bullet.move(player.x + ((player.w - bullet.w) / 2), player.y - 8 - bullet.h);
@@ -162,13 +162,13 @@ Crafty.c('PlasmaBullet', {
        this.damage = config('plasma_damage');
        this.move(50, 50); // without this, bullet is stuck behind a wall
        this.fired = false;
-       
+
        var plasma = this;
-       
+
        this.bind('EnterFrame', function() {
           if (plasma.fired == true && randomBetween(0, 100) <= 15) {
               Crafty.e('Lava').move(plasma.x, plasma.y);
-          } 
+          }
        });
-   } 
+   }
 });

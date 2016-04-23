@@ -4,10 +4,15 @@ Crafty.c('Player', {
         this.lastHurtByLava = Date.now();
         this.requires('Actor').color('red').controllable(100).collideWith('Wall');
         Crafty.e('MachineGun');
-        
+
         Crafty.bind('MouseWheelScroll', function() {
             if (Crafty.first('PlasmaGun') != null) {
                 Crafty.single('PlasmaGun').die();
+                var bullet = Crafty.first('PlasmaBullet');
+                if (bullet != null)
+                {
+                  bullet.die();  
+                }
                 Crafty.e('MachineGun');
             } else if (Crafty.first('MachineGun') != null) {
                 Crafty.single('MachineGun').die();
@@ -15,7 +20,7 @@ Crafty.c('Player', {
             }
         })
     },
-    
+
     getHurt: function(damage) {
         this.health -= damage;
         this.health = Math.max(this.health, 0);
