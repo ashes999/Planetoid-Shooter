@@ -86,8 +86,7 @@ Crafty.c('PlasmaGun', {
         if (this.bullet == null) {
             var bullet = Crafty.e('PlasmaBullet');
             bullet.bind('EnterFrame', this.centerOverPlayer);
-            this.bullet = bullet;
-            console.log("Made bullet; guns are " + Crafty.single('BaseGun'));
+            this.bullet = bullet;            
         }
 
         this.charges = Math.min(this.charges + 1, 40);

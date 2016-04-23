@@ -1,7 +1,15 @@
 // All callbacks require (x:Float, y:Float) as inputs
 Crafty.c('GlobalClickHandler', {
+
     init: function() {
         var self = this;
+
+        // First array = event we're binding to, eg. Click
+        // Second array = our callback function
+        this.eventHandlers = [];
+        this.callbacks = [];
+
+
         self.mouseUpCallback = null;
 
         this.requires('2D, Alpha, Canvas, Mouse, FollowCamera')
@@ -10,21 +18,25 @@ Crafty.c('GlobalClickHandler', {
 
     clear: function()
     {
-        this.unbind('MouseMove').unbind('Click').unbind('MouseDown')
-          .unbind('MouseUp').unbind('EnterFrame');
+      for (var i = 0; i < this.eventHandlers.length; i++)
+      {
+        this.unbind(this.eventHandlers[i], this.callbacks[i]);
+      }
     },
 
     onMove: function(callback) {
-        this.bind('MouseMove', function(e) {
+        var onMove = function(e) {
             callback(e.realX, e.realY);
-        });
+        }
+        this.trackEvent('MouseMove', onMove);
         return this;
     },
 
     onClick: function(callback) {
-        this.bind('Click', function(e) {
+        var callback = function(e) {
             callback(e.realX, e.realY);
-        });
+        };
+        trackEvent('Click', callback);
         return this;
     },
 
@@ -38,29 +50,43 @@ Crafty.c('GlobalClickHandler', {
         self.isMouseDown = false;
         self.mouseCoordinates = [0, 0];
 
-        this.bind('MouseDown', function(e) {
+        var mouseDown = function(e) {
             self.isMouseDown = true;
             callback(e.realX, e.realY);
-        });
+        };
 
-        this.bind('MouseUp', function(e) {
+        this.trackEvent('MouseDown', mouseDown);
+
+        var mouseUp = function(e) {
             self.isMouseDown = false;
             self.mouseCoordinates = [e.realX, e.realY];
             if (self.mouseUpCallback != null) {
                 self.mouseUpCallback(e.realX, e.realY);
             }
-        });
+        };
 
-        this.bind('MouseMove', function(e) {
+        this.trackEvent('MouseUp', mouseUp)
+
+        var mouseMove = function(e) {
             self.mouseCoordinates = [e.realX, e.realY];
-        });
+        };
 
-        this.bind('EnterFrame', function() {
+        this.trackEvent('MouseMove', mouseMove);
+
+        var enterFrame = function() {
             if (self.isMouseDown) {
                 callback(self.mouseCoordinates[0], self.mouseCoordinates[1]);
             }
-        });
+        };
+
+        this.trackEvent('EnterFrame', enterFrame);
 
         return this;
+    },
+
+    trackEvent: function(event, callback) {
+      this.bind(event, callback);
+      this.eventHandlers.push(event);
+      this.callbacks.push(callback);
     }
 });
