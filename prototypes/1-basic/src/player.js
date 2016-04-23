@@ -6,12 +6,13 @@ Crafty.c('Player', {
         Crafty.e('MachineGun');
 
         Crafty.bind('MouseWheelScroll', function() {
+          Crafty.single('GlobalClickHandler').clear();
             if (Crafty.first('PlasmaGun') != null) {
                 Crafty.single('PlasmaGun').die();
                 var bullet = Crafty.first('PlasmaBullet');
                 if (bullet != null)
                 {
-                  bullet.die();  
+                  bullet.die();
                 }
                 Crafty.e('MachineGun');
             } else if (Crafty.first('MachineGun') != null) {
