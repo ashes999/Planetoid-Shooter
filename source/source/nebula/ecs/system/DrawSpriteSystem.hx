@@ -7,7 +7,7 @@ import nebula.ecs.Entity;
 
 import flixel.FlxSprite;
 import flixel.FlxState;
-
+import flixel.addons.display.FlxBackdrop;
 // Looks for and initializes SpriteComponent instances
 class DrawSpriteSystem extends AbstractSystem
 {
@@ -26,10 +26,19 @@ class DrawSpriteSystem extends AbstractSystem
             var sprite:SpriteComponent = entity.get(SpriteComponent);            
             if (sprite.sprite == null)
             {
-                var s:FlxSprite = new FlxSprite();
-                s.loadGraphic(sprite.image);
-                sprite.sprite =  s;
-                this.state.add(s);
+                if(sprite.isRepeating)
+                {
+                    var s:FlxBackdrop = new FlxBackdrop(sprite.image);
+                    sprite.sprite =  s;
+                    this.state.add(s);
+                }
+                else
+                {
+                    var s:FlxSprite = new FlxSprite();
+                    s.loadGraphic(sprite.image);
+                    sprite.sprite =  s;
+                    this.state.add(s);
+                }
             }
             
             var position:PositionComponent = entity.get(PositionComponent);

@@ -8,10 +8,12 @@ class SpriteComponent extends AbstractComponent
     
     // internal
     public var sprite:FlxSprite;
+    public var isRepeating:Bool;
 
-    public function new(fileName:String)
+    public function new(fileName:String,isRepeating:Bool = false)
     {
         super();
         this.image = fileName;
+        this.isRepeating = isRepeating;
     }
 }
