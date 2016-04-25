@@ -1,11 +1,17 @@
 package nebula.ecs.system;
 
 import flixel.FlxState;
+import flixel.FlxSprite;
+import flixel.addons.display.FlxBackdrop;
+
 import IntComponent;
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Entity;
 import nebula.ecs.system.DrawSpriteSystem;
+
+
+import noor.AssertionException;
 
 using noor.Assert;
 
@@ -61,6 +67,33 @@ class DrawSpriteSystemTest
         
         Assert.that(sprite.x, Is.equalTo(p.x));
         Assert.that(sprite.y, Is.equalTo(p.y));
+    }
+
+    @Test
+    public function isReaptingConvertsTheSpriteSpriteToFlxBackdrop()
+    {
+        var system = new DrawSpriteSystem(new FlxState());
+        var s = new SpriteComponent("assets/ball.png",true);
+        var p = new PositionComponent(135, 208);
+        var e = new Entity().add(p).add(s);
+        
+        system.entityChanged(e);
+        system.update(0);
+        
+        var sprite = s.sprite;
+        
+        var errorMsg = "";
+        
+        try
+        {
+            cast(sprite, FlxBackdrop);
+        }
+        catch( msg : String )
+        {
+            errorMsg = msg;
+        }
+        // ensure that the above try catch block doesn't throw errors
+        Assert.that(errorMsg, Is.equalTo(""));
     }
     
 }

@@ -13,6 +13,7 @@
 	
 	<haxelib name="munit" />
 	<haxelib name="flixel" />
+	<haxelib name="flixel-addons" />
 	<haxelib name="hamcrest" />
 	<haxelib name="noor" />
 	
