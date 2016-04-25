@@ -16,7 +16,7 @@ class Player
     {
         return new Entity()
             .add(new ColourComponent(255, 0, 0, 32, 32))
-            .add(new SpriteComponent('assets/images/butterfly.png',true))
+            .add(new SpriteComponent('assets/images/butterfly.png'))
             .add(new PositionComponent(0, 0))
             .add(new KeyboardInputComponent(100));
     }

@@ -67,10 +67,11 @@ class DrawSpriteSystemTest
         
         Assert.that(sprite.x, Is.equalTo(p.x));
         Assert.that(sprite.y, Is.equalTo(p.y));
+
     }
 
     @Test
-    public function isReaptingConvertsTheSpriteSpriteToFlxBackdrop()
+    public function updateInitializesRepeatingSpriteToFlxBackdrop()
     {
         var system = new DrawSpriteSystem(new FlxState());
         var s = new SpriteComponent("assets/ball.png",true);
@@ -82,18 +83,7 @@ class DrawSpriteSystemTest
         
         var sprite = s.sprite;
         
-        var errorMsg = "";
-        
-        try
-        {
-            cast(sprite, FlxBackdrop);
-        }
-        catch( msg : String )
-        {
-            errorMsg = msg;
-        }
-        // ensure that the above try catch block doesn't throw errors
-        Assert.that(errorMsg, Is.equalTo(""));
+        Assert.isTrue(Std.is(sprite, FlxBackdrop));
     }
     
 }

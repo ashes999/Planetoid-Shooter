@@ -28,17 +28,13 @@ class DrawSpriteSystem extends AbstractSystem
             {
                 if(sprite.isRepeating)
                 {
-                    var s:FlxBackdrop = new FlxBackdrop(sprite.image);
-                    sprite.sprite =  s;
-                    this.state.add(s);
+                    sprite.sprite = new FlxBackdrop(sprite.image) ;
                 }
                 else
                 {
-                    var s:FlxSprite = new FlxSprite();
-                    s.loadGraphic(sprite.image);
-                    sprite.sprite =  s;
-                    this.state.add(s);
+                    sprite.sprite = new FlxSprite(0,0,sprite.image);
                 }
+                this.state.add(sprite.sprite);
             }
             
             var position:PositionComponent = entity.get(PositionComponent);
