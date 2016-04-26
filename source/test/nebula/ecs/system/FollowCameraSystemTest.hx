@@ -14,6 +14,8 @@ import StringComponent;
 
 import nebula.ecs.Entity;
 
+import noor.AssertionException;
+
 using noor.Assert;
 
 @:access(nebula.ecs.system.FollowCameraSystem)
@@ -28,7 +30,7 @@ class FollowCameraSystemTest
         system.entityChanged(entity);
         Assert.that(system.entities.length, Is.equalTo(0));
         
-
+        system = new FollowCameraSystem(new FlxState());
         entity = new Entity().add(new SpriteComponent("fakeImage"));
         system.entityChanged(entity);
         Assert.that(system.entities.length, Is.equalTo(0));
@@ -55,25 +57,21 @@ class FollowCameraSystemTest
     }
     
     @Test
-    public function updateRemakesTheSpriteIfTheComponentSizeChanges()
+    public function addingMoreThanOneEntityThrowsException()
     {
         var system = new FollowCameraSystem(new FlxState());
 
         var entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
-        
         system.entityChanged(entity);
-        system.update(0);
 
-        Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
-
-        //add a new entity with the same components 
-        entity = new Entity().add(new SpriteComponent("assets/orange.png")).add(new CameraComponent());
-        
-        system.entityChanged(entity);
-        system.update(0);
-
-        Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
-        Assert.that(system.entities.length, Is.equalTo(2));
-        Assert.that(system.entities[1], Is.equalTo(entity));
+        try
+        {
+            entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
+            system.entityChanged(entity);
+        }
+        catch(msg : String )
+        {
+            Assert.that(msg , Is.equalTo("Camera can't follow more than one entity"));
+        }
     }
 }

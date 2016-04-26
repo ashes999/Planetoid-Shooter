@@ -26,9 +26,8 @@ class PlayState extends FlxState
 
         var background:Entity = new Entity().add(new PositionComponent(0, 0))
         									.add(new SpriteComponent('assets/images/background.jpg',true));
-        container.addEntity(background);
         
-        container.addEntity(Player.create());
+        Player.create();
 
 	}
 
