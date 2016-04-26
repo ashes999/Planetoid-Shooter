@@ -15,7 +15,7 @@ class FollowCameraSystem extends AbstractSystem
 
     public function new(state:FlxState)
     {
-        super([CameraComponent, SpriteComponent]);
+        super([SpriteComponent,CameraComponent]);
         this.state = state;
     }
     
@@ -23,11 +23,12 @@ class FollowCameraSystem extends AbstractSystem
     {
         for (entity in this.entities)
         {
-            var sprite:SpriteComponent = entity.get(SpriteComponent);            
-            if (flixel.FlxG.camera.target != sprite.sprite)
+            var sprite:SpriteComponent = entity.get(SpriteComponent);
+            //if this is the latest entity with this camera component & the camera is not following it
+            //this is subject to change depending on discussion 
+            if (entity == entities[entities.length-1] && flixel.FlxG.camera.target != sprite.sprite)
             {   
                 flixel.FlxG.camera.follow(sprite.sprite);
-                trace("new target");
             }
         }
     }
