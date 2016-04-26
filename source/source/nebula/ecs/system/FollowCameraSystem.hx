@@ -15,7 +15,7 @@ class FollowCameraSystem extends AbstractSystem
 
     public function new(state:FlxState)
     {
-        super([SpriteComponent,CameraComponent]);
+        super([CameraComponent,SpriteComponent]);
         this.state = state;
     }
     
