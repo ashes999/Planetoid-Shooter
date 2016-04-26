@@ -7,6 +7,7 @@ import nebula.ecs.system.AbstractSystem;
 import nebula.ecs.system.DrawSpriteSystem;
 import nebula.ecs.system.DrawColourSystem;
 import nebula.ecs.system.KeyboardInputMovementSystem;
+import nebula.ecs.system.FollowCameraSystem;
 
 // The main class that glues everything together. In Ash, this is called "engine."
 // A collection of components and systems. Use this per screen or whatever.
@@ -60,6 +61,7 @@ class Container
     {
         this.addSystem(new DrawSpriteSystem(state))
             .addSystem(new DrawColourSystem(state))
-            .addSystem(new KeyboardInputMovementSystem());
+            .addSystem(new KeyboardInputMovementSystem())
+            .addSystem(new FollowCameraSystem(state));
     }
 }
