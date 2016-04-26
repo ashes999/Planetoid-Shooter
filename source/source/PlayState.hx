@@ -28,6 +28,7 @@ class PlayState extends FlxState
         									.add(new SpriteComponent('assets/images/background.jpg',true));
         
         Player.create();
+        
 
 	}
 

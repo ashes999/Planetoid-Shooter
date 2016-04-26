@@ -55,7 +55,7 @@ class FollowCameraSystemTest
         system.update(0);
         Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
     }
-    
+
     @Test
     public function addingMoreThanOneEntityThrowsException()
     {
@@ -73,5 +73,23 @@ class FollowCameraSystemTest
         {
             Assert.that(msg , Is.equalTo("Camera can't follow more than one entity"));
         }
+    }
+
+    @Test
+    public function removingCameraComponentResetCameraTarget()
+    {
+        var system = new FollowCameraSystem(new FlxState());
+
+        var entity:Entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
+        system.entityChanged(entity);
+        
+        Assert.that(FlxG.camera.target, Is.equalTo(null));
+
+        system.update(0);
+        Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
+
+        entity.remove(new CameraComponent());
+        system.update(0);
+        Assert.that(FlxG.camera.target, Is.equalTo(null));
     }
 }
