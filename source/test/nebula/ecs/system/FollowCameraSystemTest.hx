@@ -63,12 +63,13 @@ class FollowCameraSystemTest
 
         var entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
         system.entityChanged(entity);
-
+        
 
         Assert.throws(String, function()
         {
             entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
             system.entityChanged(entity);
+            system.update(0);
         });
 
     }
