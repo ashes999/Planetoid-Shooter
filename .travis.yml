@@ -3,7 +3,7 @@ haxe:
   - "3.2.1"
 neko: "2.0.0"
 install:
-  - haxelib git munit > /dev/null
+  - haxelib install munit > /dev/null
   - haxelib install hamcrest > /dev/null
   - haxelib install flixel > /dev/null
   - haxelib install flixel-addons >/dev/null
