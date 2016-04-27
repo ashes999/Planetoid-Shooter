@@ -34,7 +34,8 @@ class FollowCameraSystem extends AbstractSystem
                 FlxG.camera.follow(sprite.sprite);
             }
         }
-        else {
+        else if (FlxG.camera.target != null)
+        {
             FlxG.camera.follow(null);
         }
     }
