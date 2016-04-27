@@ -21,25 +21,22 @@ class FollowCameraSystem extends AbstractSystem
     
     override public function update(elapsed:Float):Void
     {
-        if(this.entities.length == 1)
-        {   
-            var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
-
-            if (flixel.FlxG.camera.target != sprite.sprite)
-            {   
-                flixel.FlxG.camera.follow(sprite.sprite);
-            }
-        }
-        else
-            flixel.FlxG.camera.follow(null);  
-    }
-    override public function entityChanged(entity:Entity):Void
-    {
-        if(this.entities.length > 0 && entity != this.entities[0])
+        if(this.entities.length > 1)
         {
             throw "Camera can't follow more than one entity";
         }
+        else if(this.entities.length == 1)
+        {   
+            var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
 
-        super.entityChanged(entity);
+            if (FlxG.camera.target != sprite.sprite)
+            {   
+                FlxG.camera.follow(sprite.sprite);
+            }
+        }
+        else if (FlxG.camera.target != null)
+        {
+            FlxG.camera.follow(null);
+        }
     }
 }
