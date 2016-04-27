@@ -2,21 +2,15 @@ package nebula.ecs.system;
 
 import flixel.FlxState;
 import flixel.FlxG;
-
+import IntComponent;
+import StringComponent;
+using massive.munit.Assert;
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.component.CameraComponent;
-
+import nebula.ecs.Entity;
 import nebula.ecs.system.FollowCameraSystem;
 
-import IntComponent;
-import StringComponent;
-
-import nebula.ecs.Entity;
-
-import noor.AssertionException;
-
-using noor.Assert;
 
 @:access(nebula.ecs.system.FollowCameraSystem)
 class FollowCameraSystemTest
@@ -28,19 +22,19 @@ class FollowCameraSystemTest
         
         var entity:Entity = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(entity);
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
         
         system = new FollowCameraSystem(new FlxState());
         entity = new Entity().add(new SpriteComponent("fakeImage"));
         system.entityChanged(entity);
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
 
 
         entity = new Entity().add(new PositionComponent(0,0)).add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
         system.entityChanged(entity);
 
-        Assert.that(system.entities.length, Is.equalTo(1));
-        Assert.that(system.entities[0], Is.equalTo(entity));
+        Assert.areEqual(1, system.entities.length);
+        Assert.areEqual(entity, system.entities[0]);
     }
     
     @Test
@@ -51,9 +45,9 @@ class FollowCameraSystemTest
         var entity:Entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
         system.entityChanged(entity);
         
-        Assert.that(FlxG.camera.target, Is.equalTo(null));
+        Assert.isNull(FlxG.camera.target);
         system.update(0);
-        Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
+        Assert.areEqual(entity.get(SpriteComponent).sprite, FlxG.camera.target);
     }
 
     @Test
@@ -71,7 +65,7 @@ class FollowCameraSystemTest
         }
         catch(msg : String )
         {
-            Assert.that(msg , Is.equalTo("Camera can't follow more than one entity"));
+            Assert.areEqual("Camera can't follow more than one entity", msg);
         }
     }
 
@@ -83,13 +77,13 @@ class FollowCameraSystemTest
         var entity:Entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
         system.entityChanged(entity);
         
-        Assert.that(FlxG.camera.target, Is.equalTo(null));
+        Assert.isNull(FlxG.camera.target);
 
         system.update(0);
-        Assert.that(FlxG.camera.target, Is.equalTo(entity.get(SpriteComponent).sprite));
+        Assert.areEqual(entity.get(SpriteComponent).sprite, FlxG.camera.target);
 
         entity.remove(new CameraComponent());
         system.update(0);
-        Assert.that(FlxG.camera.target, Is.equalTo(null));
+        Assert.isNull(FlxG.camera.target);
     }
 }

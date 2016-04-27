@@ -15,7 +15,6 @@
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="hamcrest" />
-	<haxelib name="noor" />
 	
 	<haxedef name="FLX_UNIT_TEST" />
 </project>

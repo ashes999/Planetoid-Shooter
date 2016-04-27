@@ -1,10 +1,9 @@
 package nebula.ecs;
 
+using massive.munit.Assert;
 import nebula.ecs.Container;
 import nebula.ecs.Entity;
 import nebula.ecs.system.AbstractSystem;
-
-using noor.Assert;
 
 class ContainerTest
 {
@@ -12,8 +11,8 @@ class ContainerTest
     public function constructorCreatesEmptyCollections()
     {
         var container = new Container();
-        Assert.that(container.entities.length, Is.equalTo(0));
-        Assert.that(container.systems.length, Is.equalTo(0));
+        Assert.areEqual(0, container.entities.length);
+        Assert.areEqual(0, container.systems.length);
     }
     
     @Test
@@ -31,7 +30,7 @@ class ContainerTest
         var container = new Container();
         var expected = new DummySystem();
         container.addSystem(expected);
-        Assert.that(container.systems.length, Is.equalTo(1));
+        Assert.areEqual(1,container.systems.length);
         var actual = container.systems[0];
         Assert.areEqual(expected, actual);
     }
@@ -42,9 +41,9 @@ class ContainerTest
         var container = new Container();
         var expected = new Entity();
         container.addEntity(expected);
-        Assert.that(container.entities.length, Is.equalTo(1));
+        Assert.areEqual(1, container.entities.length);
         var actual = container.entities[0];
-        Assert.areEqual(expected, actual, "Expected/actual mismatch");
+        Assert.areEqual(expected, actual);
     }
     
     @Test
@@ -75,8 +74,8 @@ class ContainerTest
         var expected = new Entity();
         container.entityChanged(new Entity());
         container.entityChanged(expected);
-        Assert.areEqual(expected, s1.whoChanged, "Expected/actual mismatch");
-        Assert.areEqual(expected, s2.whoChanged, "Expected/actual mismatch");
+        Assert.areEqual(expected, s1.whoChanged);
+        Assert.areEqual(expected, s2.whoChanged);
     }
 }
 
