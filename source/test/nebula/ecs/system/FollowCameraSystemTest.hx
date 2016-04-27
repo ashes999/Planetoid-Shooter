@@ -64,15 +64,13 @@ class FollowCameraSystemTest
         var entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
         system.entityChanged(entity);
 
-        try
+
+        Assert.throws(String, function()
         {
             entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
             system.entityChanged(entity);
-        }
-        catch(msg : String )
-        {
-            Assert.that(msg , Is.equalTo("Camera can't follow more than one entity"));
-        }
+        });
+
     }
 
     @Test
