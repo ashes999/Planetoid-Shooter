@@ -41,6 +41,7 @@ class FollowCameraSystemTest
 
         Assert.that(system.entities.length, Is.equalTo(1));
         Assert.that(system.entities[0], Is.equalTo(entity));
+
     }
     
     @Test
@@ -65,13 +66,14 @@ class FollowCameraSystemTest
         system.entityChanged(entity);
         
 
-        Assert.throws(String, function()
+        var message:String = Assert.throws(String, function()
         {
             entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
             system.entityChanged(entity);
             system.update(0);
         });
 
+        Assert.that(message , Is.equalTo("Camera can't follow more than one entity"));
     }
 
     @Test

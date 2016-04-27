@@ -29,13 +29,13 @@ class FollowCameraSystem extends AbstractSystem
         {   
             var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
 
-            if (flixel.FlxG.camera.target != sprite.sprite)
+            if (FlxG.camera.target != sprite.sprite)
             {   
-                flixel.FlxG.camera.follow(sprite.sprite);
+                FlxG.camera.follow(sprite.sprite);
             }
         }
         else {
-            flixel.FlxG.camera.follow(null);
+            FlxG.camera.follow(null);
         }
     }
 }
