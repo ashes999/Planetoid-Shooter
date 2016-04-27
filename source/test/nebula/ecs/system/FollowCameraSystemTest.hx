@@ -60,7 +60,7 @@ class FollowCameraSystemTest
         
         entity = new Entity().add(new SpriteComponent("assets/apple.png")).add(new CameraComponent());
 
-        var message:String = Assert.throws(String, function()
+        var message:String = Assert2.throws(String, function()
         {
             system.entityChanged(entity);
             system.update(0);
