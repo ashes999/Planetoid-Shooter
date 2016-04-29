@@ -27,18 +27,16 @@ class DrawColourSystemTest
     }
     
     @Test
-    public function updateInitializesTheColoursSprite()
+    public function entityChangedInitializesTheColoursSprite()
     {
         var system = new DrawColourSystem(new FlxState());
         var e = new Entity().add(new PositionComponent(0, 0)).add(new ColourComponent(0, 0, 0, 1, 1));
         system.entityChanged(e);
-        Assert.isNull(e.get(ColourComponent).sprite);
-        system.update(0);
         Assert.isNotNull(e.get(ColourComponent).sprite);
     }
     
     @Test
-    public function updateRemakesTheSpriteIfTheComponentSizeChanges()
+    public function entityChangedRemakesTheSpriteIfTheComponentSizeChanges()
     {
         var system = new DrawColourSystem(new FlxState());
         var c = new ColourComponent(0, 0, 0, 32, 32);

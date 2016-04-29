@@ -30,15 +30,13 @@ class DrawSpriteSystemTest
     }
     
     @Test
-    public function updateInitializesTheSpritesSprite()
+    public function entityChangedInitializesTheSpritesSprite()
     {
         var system = new DrawSpriteSystem(new FlxState());
         var e = new Entity()
             .add(new PositionComponent(0, 0))
             .add(new SpriteComponent("assets/apple.png"));
         system.entityChanged(e);
-        Assert.isNull(e.get(SpriteComponent).sprite);
-        system.update(0);
         Assert.isNotNull(e.get(SpriteComponent).sprite);
     }
     

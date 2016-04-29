@@ -19,24 +19,28 @@ class FollowCameraSystem extends AbstractSystem
         this.state = state;
     }
     
-    override public function update(elapsed:Float):Void
+    override public function entityChanged(entity:Entity):Void
     {
-        if(this.entities.length > 1)
+        super.entityChanged(entity);
+        
+        if(this.entities.length == 0)
         {
-            throw "Camera can't follow more than one entity";
+            if (FlxG.camera.target != null)
+            {
+                FlxG.camera.follow(null);
+            }
         }
         else if(this.entities.length == 1)
         {   
-            var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
-
+            var sprite:SpriteComponent = entity.get(SpriteComponent);
             if (FlxG.camera.target != sprite.sprite)
             {   
                 FlxG.camera.follow(sprite.sprite);
             }
         }
-        else if (FlxG.camera.target != null)
+        else if(this.entities.length >= 2)
         {
-            FlxG.camera.follow(null);
+            throw "Camera can't follow more than one entity";
         }
     }
 }

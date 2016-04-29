@@ -23,6 +23,17 @@ class DrawSpriteSystem extends AbstractSystem
     {
         for (entity in this.entities)
         {
+            var sprite:SpriteComponent = entity.get(SpriteComponent);
+            var position:PositionComponent = entity.get(PositionComponent);
+
+            sprite.sprite.setPosition(position.x,position.y);
+        }
+    }
+    override public function entityChanged(entity:Entity):Void
+    {
+        super.entityChanged(entity);
+        for (entity in this.entities)
+        {
             var sprite:SpriteComponent = entity.get(SpriteComponent);            
             if (sprite.sprite == null)
             {
