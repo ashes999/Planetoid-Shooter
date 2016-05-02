@@ -32,8 +32,9 @@ class FollowCameraSystem extends AbstractSystem
         }
         else if(this.entities.length == 1)
         {   
-            var sprite:SpriteComponent = entity.get(SpriteComponent);
-            if (FlxG.camera.target != sprite.sprite)
+            var sprite:SpriteComponent = this.entities[0].get(SpriteComponent);
+
+            if (sprite!= null && sprite.sprite!= null && FlxG.camera.target != sprite.sprite)
             {   
                 FlxG.camera.follow(sprite.sprite);
             }
