@@ -2,13 +2,12 @@ package nebula.ecs.system;
 
 import flixel.FlxState;
 import IntComponent;
+using massive.munit.Assert;
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.ColourComponent;
 import nebula.ecs.Entity;
 import nebula.ecs.system.DrawColourSystem;
 import StringComponent;
-
-using noor.Assert;
 
 @:access(nebula.ecs.system.DrawColourSystem)
 class DrawColourSystemTest
@@ -19,27 +18,25 @@ class DrawColourSystemTest
         var system = new DrawColourSystem(new FlxState());
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);               
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
         
         var e2 = new Entity().add(new PositionComponent(0, 0)).add(new ColourComponent(0, 0, 0, 1, 1));
         system.entityChanged(e2);        
-        Assert.that(system.entities.length, Is.equalTo(1));
-        Assert.that(system.entities[0], Is.equalTo(e2));
+        Assert.areEqual(1, system.entities.length);
+        Assert.areEqual(e2, system.entities[0]);
     }
     
     @Test
-    public function updateInitializesTheColoursSprite()
+    public function entityChangedInitializesTheColoursSprite()
     {
         var system = new DrawColourSystem(new FlxState());
         var e = new Entity().add(new PositionComponent(0, 0)).add(new ColourComponent(0, 0, 0, 1, 1));
         system.entityChanged(e);
-        Assert.that(e.get(ColourComponent).sprite, Is.equalTo(null));
-        system.update(0);
-        Assert.isTrue(e.get(ColourComponent).sprite != null);
+        Assert.isNotNull(e.get(ColourComponent).sprite);
     }
     
     @Test
-    public function updateRemakesTheSpriteIfTheComponentSizeChanges()
+    public function entityChangedRemakesTheSpriteIfTheComponentSizeChanges()
     {
         var system = new DrawColourSystem(new FlxState());
         var c = new ColourComponent(0, 0, 0, 32, 32);
@@ -48,17 +45,17 @@ class DrawColourSystemTest
         system.update(0);
         
         var s1 = c.sprite;
-        Assert.isTrue(s1 != null);
+        Assert.isNotNull(s1);
         
         c.width = 64;
         system.update(0);
         var s2 = c.sprite;
-        Assert.isTrue(s2 != s1);
+        Assert.areNotEqual(s1, s2);
         
         c.height = 16;
         system.update(0);
         var s3 = c.sprite;
-        Assert.isTrue(s3 != s2);
+        Assert.areNotEqual(s2, s3);
     }
     
     @Test
@@ -71,22 +68,22 @@ class DrawColourSystemTest
         system.update(0);
         
         var s1 = c.sprite;
-        Assert.isTrue(s1 != null);
+        Assert.isNotNull(s1);
         
         c.red = 64;
         system.update(0);
         var s2 = c.sprite;
-        Assert.isTrue(s2 != s1);
+        Assert.areNotEqual(s1, s2);
         
         c.green = 16;
         system.update(0);
         var s3 = c.sprite;
-        Assert.isTrue(s3 != s2);
+        Assert.areNotEqual(s2, s3);
         
         c.blue = 137;
         system.update(0);
         var s4 = c.sprite;
-        Assert.isTrue(s4 != s3);
+        Assert.areNotEqual(s3, s4);
     }
     
     @Test
@@ -100,8 +97,8 @@ class DrawColourSystemTest
         system.update(0);
         
         var sprite = c.sprite;
-        Assert.that(sprite.x, Is.equalTo(p.x));
-        Assert.that(sprite.y, Is.equalTo(p.y));
+        Assert.areEqual(p.x, sprite.x);
+        Assert.areEqual(p.y, sprite.y);
         
         // player moves the entity. Does the colour's sprite move?
         p.x = 32;
@@ -109,8 +106,8 @@ class DrawColourSystemTest
         
         system.update(0);
         
-        Assert.that(sprite.x, Is.equalTo(p.x));
-        Assert.that(sprite.y, Is.equalTo(p.y));
+        Assert.areEqual(p.x, sprite.x);
+        Assert.areEqual(p.y, sprite.y);
     }
     
 }

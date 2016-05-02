@@ -2,12 +2,11 @@ package nebula.ecs.system;
 
 import flixel.input.keyboard.FlxKey;
 import IntComponent;
+using massive.munit.Assert;
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.KeyboardInputComponent;
 import nebula.ecs.Entity;
 import nebula.ecs.system.KeyboardInputMovementSystem;
-
-using noor.Assert;
 
 @:access(nebula.ecs.system.KeyboardInputMovementSystem)
 class KeyboardInputMovementSystemTest
@@ -25,12 +24,12 @@ class KeyboardInputMovementSystemTest
     {
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);               
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
         
         var e2 = new Entity().add(new PositionComponent(0, 0)).add(new KeyboardInputComponent(1));
         system.entityChanged(e2);        
-        Assert.that(system.entities.length, Is.equalTo(1));
-        Assert.that(system.entities[0], Is.equalTo(e2));
+        Assert.areEqual(1, system.entities.length);
+        Assert.areEqual(e2, system.entities[0]);
     }
     
     @Test

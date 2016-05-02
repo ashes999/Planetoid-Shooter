@@ -5,15 +5,12 @@ import flixel.FlxSprite;
 import flixel.addons.display.FlxBackdrop;
 
 import IntComponent;
+using massive.munit.Assert;
+
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Entity;
 import nebula.ecs.system.DrawSpriteSystem;
-
-
-import noor.AssertionException;
-
-using noor.Assert;
 
 @:access(nebula.ecs.system.DrawSpriteSystem)
 class DrawSpriteSystemTest
@@ -24,25 +21,23 @@ class DrawSpriteSystemTest
         var system = new DrawSpriteSystem(new FlxState());
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);               
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
         
         var e2 = new Entity().add(new PositionComponent(0, 0)).add(new SpriteComponent("not used.png"));
         system.entityChanged(e2);        
-        Assert.that(system.entities.length, Is.equalTo(1));
-        Assert.that(system.entities[0], Is.equalTo(e2));
+        Assert.areEqual(1, system.entities.length);
+        Assert.areEqual(e2, system.entities[0]);
     }
     
     @Test
-    public function updateInitializesTheSpritesSprite()
+    public function entityChangedInitializesTheSpritesSprite()
     {
         var system = new DrawSpriteSystem(new FlxState());
         var e = new Entity()
             .add(new PositionComponent(0, 0))
             .add(new SpriteComponent("assets/apple.png"));
         system.entityChanged(e);
-        Assert.that(e.get(SpriteComponent).sprite, Is.equalTo(null));
-        system.update(0);
-        Assert.isTrue(e.get(SpriteComponent).sprite != null);
+        Assert.isNotNull(e.get(SpriteComponent).sprite);
     }
     
     @Test
@@ -56,8 +51,8 @@ class DrawSpriteSystemTest
         system.update(0);
         
         var sprite = s.sprite;
-        Assert.that(sprite.x, Is.equalTo(p.x));
-        Assert.that(sprite.y, Is.equalTo(p.y));
+        Assert.areEqual(p.x, sprite.x);
+        Assert.areEqual(p.y, sprite.y);
         
         // player moves the entity. Does the sprite's sprite move?
         p.x = 32;
@@ -65,9 +60,8 @@ class DrawSpriteSystemTest
         
         system.update(0);
         
-        Assert.that(sprite.x, Is.equalTo(p.x));
-        Assert.that(sprite.y, Is.equalTo(p.y));
-
+        Assert.areEqual(p.x, sprite.x);
+        Assert.areEqual(p.y, sprite.y);
     }
 
     @Test
@@ -83,7 +77,7 @@ class DrawSpriteSystemTest
         
         var sprite = s.sprite;
         
-        Assert.isTrue(Std.is(sprite, FlxBackdrop));
+        Assert.isType(sprite, FlxBackdrop);
     }
     
 }

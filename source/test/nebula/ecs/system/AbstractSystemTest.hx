@@ -1,11 +1,10 @@
 package nebula.ecs.system;
 
 import IntComponent;
+using massive.munit.Assert;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.Entity;
 import nebula.ecs.system.AbstractSystem;
-
-using noor.Assert;
 
 // You may find this amusing. It's possible to test base/abstract class code
 // in isolation. Then, subclasses only need to test subclassed code! Awesomeness ensues.
@@ -18,7 +17,7 @@ class AbstractSystemTest
         var system = new IntComponentSystem([IntComponent]);
         var e = new Entity().add(new StringComponent("testing!"));
         system.entityChanged(e);
-        Assert.that(system.entities.length, Is.equalTo(0));
+        Assert.areEqual(0, system.entities.length);
     }
     
     @Test
@@ -27,7 +26,7 @@ class AbstractSystemTest
         var system = new IntComponentSystem([IntComponent]);
         var e = new Entity().add(new StringComponent("testing!")).add(new IntComponent(1));
         system.entityChanged(e);        
-        Assert.that(system.entities.length, Is.equalTo(1));
+        Assert.areEqual(1, system.entities.length);
         Assert.areEqual(system.entities[0], e);
     }
     
@@ -39,11 +38,11 @@ class AbstractSystemTest
         
         var e = new Entity().add(new StringComponent("testing!")).add(ic);
         system.entityChanged(e);        
-        Assert.that(system.entities.length, Is.equalTo(1));
+        Assert.areEqual(1, system.entities.length);
         
         e.remove(ic);
         system.entityChanged(e);        
-        Assert.that(system.entities.length, Is.equalTo(0));        
+        Assert.areEqual(0, system.entities.length);        
     }
 }
 

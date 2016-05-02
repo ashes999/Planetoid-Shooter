@@ -1,10 +1,9 @@
 package nebula.ecs;
 
+using massive.munit.Assert;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.Container;
 import nebula.ecs.Entity;
-
-using noor.Assert;
 
 class EntityTest
 {
@@ -14,7 +13,7 @@ class EntityTest
         var c1 = new Container();
         var c2 = new Container();
         var e = new Entity();
-        Assert.that(e.container, Is.equalTo(c2));
+        Assert.areEqual(c2, e.container);
     }
     
     @Test
@@ -31,7 +30,7 @@ class EntityTest
         var expected = new IntComponent(107);
         var e = new Entity().add(expected);
         Assert.areEqual(expected, e.get(IntComponent));
-        Assert.that(e.get(StringComponent), Is.equalTo(null));
+        Assert.isNull(e.get(StringComponent));
     }
     
     @Test
