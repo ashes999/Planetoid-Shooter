@@ -82,7 +82,7 @@ class FollowCameraSystemTest
         system.update(0);
         Assert.areEqual(entity.get(SpriteComponent).sprite, FlxG.camera.target);
 
-        entity.remove(new CameraComponent());
+        entity.remove(CameraComponent);
         system.update(0);
         Assert.isNull(FlxG.camera.target);
     }

@@ -40,7 +40,7 @@ class EntityTest
         var e = new Entity().add(s);
         Assert.areEqual(s, e.get(StringComponent));
         Assert.isTrue(e.has(StringComponent));
-        e.remove(s);
+        e.remove(StringComponent);
         Assert.isNull(e.get(StringComponent));
         Assert.isFalse(e.has(StringComponent));        
     }

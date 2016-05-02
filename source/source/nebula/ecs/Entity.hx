@@ -28,9 +28,13 @@ class Entity
         return this;
     }
     
-    public function remove(component:AbstractComponent):Entity
+    /**
+    Remove a component from this entity. (eg. e.remove(SpriteComponent))
+    Does nothing if the component doesn't have that entity.
+    */
+    public function remove(clazz:Class<AbstractComponent>):Entity
     {
-        var name = Type.getClassName(Type.getClass(component));
+        var name = Type.getClassName(clazz);
         this.components.remove(name);
         this.container.entityChanged(this);
         return this;

@@ -40,7 +40,7 @@ class AbstractSystemTest
         system.entityChanged(e);        
         Assert.areEqual(1, system.entities.length);
         
-        e.remove(ic);
+        e.remove(IntComponent);
         system.entityChanged(e);        
         Assert.areEqual(0, system.entities.length);        
     }
