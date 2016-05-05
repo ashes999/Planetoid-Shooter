@@ -3,7 +3,7 @@ haxe:
   - "3.2.1"
 neko: "2.0.0"
 install:
-  - haxelib git noor https://ashes999.github.io/noor > /dev/null
+  - haxelib git noor https://github.com/ashes999/noor > /dev/null
   - haxelib install munit > /dev/null
   - haxelib install hamcrest > /dev/null
   - haxelib install flixel > /dev/null
