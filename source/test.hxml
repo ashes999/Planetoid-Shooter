@@ -1,4 +1,5 @@
 -main TestMain
+-lib noor
 -lib munit
 -lib hamcrest
 -cp source
