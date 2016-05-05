@@ -15,6 +15,8 @@ import nebula.ecs.Entity;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.component.PositionComponent;
 
+import deengames.planetoid.system.MouseShootSystem;
+
 class PlayState extends FlxState
 {
 	private var container:Container = new Container();
@@ -23,6 +25,7 @@ class PlayState extends FlxState
 	{
 		super.create();
         container.addDefaultSystems(this);
+        container.addSystem(new MouseShootSystem(this));
 
         var background:Entity = new Entity().add(new PositionComponent(0, 0))
         									.add(new SpriteComponent('assets/images/background.jpg',true));

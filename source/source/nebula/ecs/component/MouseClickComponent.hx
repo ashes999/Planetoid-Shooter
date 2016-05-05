@@ -5,7 +5,7 @@ import flixel.FlxSprite;
 
 class MouseClickComponent extends AbstractComponent
 {
-    public var callbacks:Array<Float->Float->Void>;
+    public var callbacks:Array<Int->Int->Void>;
     
     // internal
     public var sprite:FlxSprite;
@@ -13,15 +13,15 @@ class MouseClickComponent extends AbstractComponent
     public function new()
     {
         super();
-        callbacks = new Array<Float->Float->Void>();
+        callbacks = new Array<Int->Int->Void>();
     }
 
-    public function registerCallBack(callback:Float->Float->Void)
+    public function registerCallBack(callback:Int->Int->Void)
     {
     	callbacks.push(callback);
     }
 
-    public function removeCallBack(callback:Float->Float->Void)
+    public function removeCallBack(callback:Int->Int->Void)
     {
     	callbacks.remove(callback);
     }

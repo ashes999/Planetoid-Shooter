@@ -9,6 +9,8 @@ import nebula.ecs.component.CameraComponent;
 import nebula.ecs.component.MouseClickComponent;
 import nebula.ecs.Entity;
 
+import deengames.planetoid.component.MouseShootComponent;
+ 
 
 class Player
 {
@@ -21,10 +23,20 @@ class Player
                             .add(new SpriteComponent('assets/images/butterfly.png'))
                             .add(new PositionComponent(0, 0))
                             .add(new KeyboardInputComponent(100))
-                            .add(new CameraComponent())
-                            .add(new MouseClickComponent());
-        var mouseClickComponent:MouseClickComponent = entity.get(MouseClickComponent);
-        mouseClickComponent.registerCallBack(function(x:Float,y:Float){trace(x,y);});
+                            .add(new CameraComponent());
+
+        var mouseClickComponent:MouseClickComponent = new MouseClickComponent();
+        mouseClickComponent.registerCallBack(function(x:Int,y:Int){trace("1",x,y);});
+        mouseClickComponent.registerCallBack(function(x:Int,y:Int){trace("2",x,y);});
+        var func = function(x:Int,y:Int){trace("3",x,y);};  
+        mouseClickComponent.registerCallBack(func);
+        mouseClickComponent.removeCallBack(func);
+        entity.add(mouseClickComponent);
+
+        var mouseShootComponent:MouseShootComponent = new MouseShootComponent();
+        entity.add(mouseShootComponent);
+        
+
         return entity;
     }
 }
