@@ -90,15 +90,20 @@ class Entity
         return this;
     }
     
+    // Calling colour without calling size (or vice-versa) should give sensible results
+    // The default is a 32x32 red square
+    
     public function colour(red:Int, green:Int, blue:Int):Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(255, 0, 0, 32, 32)); // default colour/size
+            this.add(new ColourComponent(red, green, blue, 32, 32)); // default size
         }
-        
-        var c = this.get(ColourComponent);
-        this.add(new ColourComponent(red, green, blue, c.width, c.height));
+        else
+        {        
+            var c = this.get(ColourComponent);
+            this.add(new ColourComponent(red, green, blue, c.width, c.height));
+        }
         return this;
     }
     
@@ -106,11 +111,13 @@ class Entity
     {
         if (!this.has(ColourComponent))
         {
-            this.add(new ColourComponent(255, 0, 0, 32, 32)); // default colour/size
+            this.add(new ColourComponent(255, 0, 0, width, height)); // default colour
         }
-        
-        var c = this.get(ColourComponent);
-        this.add(new ColourComponent(c.red, c.green, c.blue, width, height));
+        else
+        {
+            var c = this.get(ColourComponent);
+            this.add(new ColourComponent(c.red, c.green, c.blue, width, height));   
+        }        
         return this;
     }
     

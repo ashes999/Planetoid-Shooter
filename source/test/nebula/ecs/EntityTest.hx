@@ -2,6 +2,12 @@ package nebula.ecs;
 
 using massive.munit.Assert;
 import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.CameraComponent;
+import nebula.ecs.component.ColourComponent;
+import nebula.ecs.component.KeyboardInputComponent;
+import nebula.ecs.component.MouseClickComponent;
+import nebula.ecs.component.PositionComponent;
+import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Container;
 import nebula.ecs.Entity;
 
@@ -43,5 +49,106 @@ class EntityTest
         e.remove(StringComponent);
         Assert.isNull(e.get(StringComponent));
         Assert.isFalse(e.has(StringComponent));        
+    }
+    
+    // Fluent API tests below
+    
+    @Test
+    public function moveAddsPositionComponent()
+    {
+        var e = new Entity().move(27, 31);
+        Assert.isTrue(e.has(PositionComponent));
+        var p = e.get(PositionComponent);
+        Assert.areEqual(27, p.x);
+        Assert.areEqual(31, p.y);
+    }
+    
+    
+    @Test
+    public function spriteAddsSpriteComponent()
+    {
+        var image:String = "assets/apple.png";
+        var e = new Entity().sprite(image);
+        Assert.isTrue(e.has(SpriteComponent));
+        Assert.areEqual(image, e.get(SpriteComponent).image);
+    }
+    
+    @Test
+    public function moveWithKeyboardAddsKeyboardInputComponent()
+    {
+        var speed:Int = 171;
+        var e = new Entity().moveWithKeyboard(speed);
+        Assert.isTrue(e.has(KeyboardInputComponent));
+        Assert.areEqual(speed, e.get(KeyboardInputComponent).moveSpeed);
+    }
+    
+    @Test
+    public function onClickAddsMouseClickComponent()
+    {
+        var clickHandler = function(x:Float, y:Float)
+        {
+            trace('Clicked on ${x}, ${y}');
+        }
+        
+        var e = new Entity().onClick(clickHandler);
+        Assert.isTrue(e.has(MouseClickComponent));
+        var actual = e.get(MouseClickComponent);
+        Assert.areEqual(1, actual.callbacks.length);
+        Assert.areEqual(clickHandler, actual.callbacks[0]);
+    }
+    
+    @Test
+    public function colourWithoutSizeAddsColourWithDefaultSize()
+    {
+        var e = new Entity().colour(0, 128, 255);
+        Assert.isTrue(e.has(ColourComponent));
+        var actual = e.get(ColourComponent);
+        Assert.areEqual(0, actual.red);
+        Assert.areEqual(128, actual.green);
+        Assert.areEqual(255, actual.blue);
+        // As long as it has a size, we're good
+        Assert.isTrue(actual.width > 0);
+        Assert.isTrue(actual.height > 0);
+    }
+    
+    @Test
+    public function colourAfterSizeAddsColourButDoesntChangeSize()
+    {
+        var e = new Entity().size(128, 27).colour(255, 64, 101);
+        Assert.isTrue(e.has(ColourComponent));
+        var actual = e.get(ColourComponent);
+        
+        Assert.areEqual(255, actual.red);
+        Assert.areEqual(64, actual.green);
+        Assert.areEqual(101, actual.blue);
+        // Didn't change size
+        Assert.areEqual(128, actual.width);
+        Assert.areEqual(27, actual.height);
+    }
+    
+    @Test
+    public function sizeWithoutColourAddsSizeWithDefaultColour()
+    {
+        var e = new Entity().size(8, 8);
+        Assert.isTrue(e.has(ColourComponent));
+        var actual = e.get(ColourComponent);
+        Assert.areEqual(8, actual.width);
+        Assert.areEqual(8, actual.height);
+        // As long as it has some colour, we're good
+        Assert.isTrue(actual.red > 0 || actual.green > 0 || actual.blue > 0);
+    }
+    
+    @Test
+    public function sizeAfterColourAddsSizeButDoesntChangeColour()
+    {
+        var e = new Entity().colour(12, 24, 79).size(18, 17);
+        Assert.isTrue(e.has(ColourComponent));
+        var actual = e.get(ColourComponent);
+        Assert.areEqual(18, actual.width);
+        Assert.areEqual(17, actual.height);
+        // Didn't change colour
+        Assert.areEqual(12, actual.red);
+        Assert.areEqual(24, actual.green);
+        Assert.areEqual(79, actual.blue);
     }
 }
