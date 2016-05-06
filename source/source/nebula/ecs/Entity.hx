@@ -90,5 +90,29 @@ class Entity
         return this;
     }
     
+    public function colour(red:Int, green:Int, blue:Int):Entity
+    {
+        if (!this.has(ColourComponent))
+        {
+            this.add(new ColourComponent(255, 0, 0, 32, 32)); // default colour/size
+        }
+        
+        var c = this.get(ColourComponent);
+        this.add(new ColourComponent(red, green, blue, c.width, c.height));
+        return this;
+    }
+    
+    public function size(width:Int, height:Int):Entity
+    {
+        if (!this.has(ColourComponent))
+        {
+            this.add(new ColourComponent(255, 0, 0, 32, 32)); // default colour/size
+        }
+        
+        var c = this.get(ColourComponent);
+        this.add(new ColourComponent(c.red, c.green, c.blue, width, height));
+        return this;
+    }
+    
     /////////////////////// End fluent API ///////////////////////
 }

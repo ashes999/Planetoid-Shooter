@@ -17,7 +17,7 @@ class Player
     public static function create():Entity
     {
         var entity:Entity =  new Entity()
-            .sprite('assets/images/butterfly.png')
+            .colour(255, 0, 0)
             .move(0, 0)
             .trackWithCamera()
             .moveWithKeyboard(100)
