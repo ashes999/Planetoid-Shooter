@@ -12,9 +12,6 @@ import flixel.math.FlxMath;
 import nebula.ecs.Container;
 import nebula.ecs.Entity;
 
-import nebula.ecs.component.SpriteComponent;
-import nebula.ecs.component.PositionComponent;
-
 class PlayState extends FlxState
 {
 	private var container:Container = new Container();
@@ -24,12 +21,11 @@ class PlayState extends FlxState
 		super.create();
         container.addDefaultSystems(this);
 
-        var background:Entity = new Entity().add(new PositionComponent(0, 0))
-        									.add(new SpriteComponent('assets/images/background.jpg',true));
+        var background:Entity = new Entity()
+            .move(0, 0)
+            .sprite('assets/images/background.jpg',true);
         
         Player.create();
-        
-
 	}
 
 	override public function update(elapsed:Float):Void

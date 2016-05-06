@@ -1,11 +1,10 @@
 package nebula.ecs;
 
 import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.PositionComponent;
+import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Container;
 
-
-// DO NOT USE THIS CLASS DIRECTLY. It's just a convenient way to get groups of related
-// components together for systems to act on. Srsly.
 class Entity
 {
     public var container(default, default):Container;
@@ -51,4 +50,20 @@ class Entity
     {
         return this.get(c) != null;
     }
+        
+    ////////////////////// Start fluent API //////////////////////
+    
+    public function move(x:Int, y:Int):Entity
+    {
+        this.add(new PositionComponent(x, y));
+        return this;
+    } 
+    
+    public function sprite(image:String, repeat:Bool = false):Entity
+    {
+        this.add(new SpriteComponent(image, repeat));
+        return this;
+    }    
+    
+    /////////////////////// End fluent API ///////////////////////
 }

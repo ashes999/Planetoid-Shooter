@@ -17,9 +17,8 @@ class Player
     public static function create():Entity
     {
         var entity:Entity =  new Entity()
-                            .add(new ColourComponent(255, 0, 0, 32, 32))
-                            .add(new SpriteComponent('assets/images/butterfly.png'))
-                            .add(new PositionComponent(0, 0))
+                            .sprite('assets/images/butterfly.png')
+                            .move(0, 0)
                             .add(new KeyboardInputComponent(100))
                             .add(new CameraComponent())
                             .add(new MouseClickComponent());
