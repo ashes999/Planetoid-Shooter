@@ -1,6 +1,10 @@
 package nebula.ecs;
 
 import nebula.ecs.component.AbstractComponent;
+import nebula.ecs.component.CameraComponent;
+import nebula.ecs.component.ColourComponent;
+import nebula.ecs.component.KeyboardInputComponent;
+import nebula.ecs.component.MouseClickComponent;
 import nebula.ecs.component.PositionComponent;
 import nebula.ecs.component.SpriteComponent;
 import nebula.ecs.Container;
@@ -63,7 +67,28 @@ class Entity
     {
         this.add(new SpriteComponent(image, repeat));
         return this;
-    }    
+    }
+    
+    public function trackWithCamera():Entity
+    {
+        this.add(new CameraComponent());
+        return this;
+    }
+    
+    // MoveSpeed is in pixels per second
+    public function moveWithKeyboard(moveSpeed:Int):Entity
+    {
+        this.add(new KeyboardInputComponent(moveSpeed));
+        return this;
+    }
+    
+    public function onClick(callback:Float->Float->Void):Entity
+    {
+        var mouseComponent:MouseClickComponent = new MouseClickComponent();
+        mouseComponent.registerCallBack(callback);
+        this.add(mouseComponent);
+        return this;
+    }
     
     /////////////////////// End fluent API ///////////////////////
 }

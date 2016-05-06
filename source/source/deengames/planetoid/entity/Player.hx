@@ -17,13 +17,14 @@ class Player
     public static function create():Entity
     {
         var entity:Entity =  new Entity()
-                            .sprite('assets/images/butterfly.png')
-                            .move(0, 0)
-                            .add(new KeyboardInputComponent(100))
-                            .add(new CameraComponent())
-                            .add(new MouseClickComponent());
-        var mouseClickComponent:MouseClickComponent = entity.get(MouseClickComponent);
-        mouseClickComponent.registerCallBack(function(x:Float,y:Float){trace(x,y);});
+            .sprite('assets/images/butterfly.png')
+            .move(0, 0)
+            .trackWithCamera()
+            .moveWithKeyboard(100)
+            .onClick(function(x:Float,y:Float)
+            {
+                trace('You clicked at ${x}, ${y}!');
+            });
         return entity;
     }
 }
