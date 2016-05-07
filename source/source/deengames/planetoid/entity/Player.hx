@@ -36,6 +36,12 @@ class Player
         var mouseShootComponent:MouseShootComponent = new MouseShootComponent();
         entity.add(mouseShootComponent);
         
+        mouseClickComponent.registerCallBack(function(x:Int,y:Int)
+        {
+            mouseShootComponent.gun.fireAtMouse();    
+        });
+
+        
 
         return entity;
     }
