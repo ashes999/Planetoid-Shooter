@@ -4,6 +4,7 @@ using massive.munit.Assert;
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.CameraComponent;
 import nebula.ecs.component.ColourComponent;
+import nebula.ecs.component.ImageComponent;
 import nebula.ecs.component.KeyboardInputComponent;
 import nebula.ecs.component.MouseClickComponent;
 import nebula.ecs.component.PositionComponent;
@@ -28,6 +29,14 @@ class EntityTest
         var e = new Entity().add(new StringComponent("hi"));
         Assert.isTrue(e.has(StringComponent));
         Assert.isFalse(e.has(IntComponent));
+    }
+    
+    @Test
+    public function hasReturnsTrueForSuperTypes()
+    {
+        var e = new Entity().image("fake.jpg");
+        Assert.isTrue(e.has(ImageComponent)); // what we added
+        Assert.isTrue(e.has(SpriteComponent)); // super class of image component
     }
     
     @Test
@@ -65,12 +74,12 @@ class EntityTest
     
     
     @Test
-    public function spriteAddsSpriteComponent()
+    public function imageAddsImageComponent()
     {
         var image:String = "assets/apple.png";
-        var e = new Entity().sprite(image);
-        Assert.isTrue(e.has(SpriteComponent));
-        Assert.areEqual(image, e.get(SpriteComponent).image);
+        var e = new Entity().image(image);
+        Assert.isTrue(e.has(ImageComponent));
+        Assert.areEqual(image, e.get(ImageComponent).image);
     }
     
     @Test

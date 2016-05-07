@@ -6,7 +6,7 @@ import nebula.ecs.component.ColourComponent;
 import nebula.ecs.component.KeyboardInputComponent;
 import nebula.ecs.component.MouseClickComponent;
 import nebula.ecs.component.PositionComponent;
-import nebula.ecs.component.SpriteComponent;
+import nebula.ecs.component.ImageComponent;
 import nebula.ecs.Container;
 
 class Entity
@@ -47,7 +47,22 @@ class Entity
     public function get<T>(c:Class<T>):T
     {
         var name:String = Type.getClassName(c);
-        return cast(this.components.get(name));
+        var toReturn:AbstractComponent = this.components.get(name);
+        
+        if (toReturn == null)
+        {
+            // Don't have the exact type. Maybe we have a subtype?
+            // eg. asked for SpriteComponent when we have ImageComponent
+            for (component in this.components)
+            {
+                if (Std.is(component, c))
+                {
+                    return cast(component);
+                }
+            }
+        }
+        
+        return cast(toReturn);
     }
     
     public function has(c:Class<AbstractComponent>):Bool
@@ -63,9 +78,9 @@ class Entity
         return this;
     } 
     
-    public function sprite(image:String, repeat:Bool = false):Entity
+    public function image(image:String, repeat:Bool = false):Entity
     {
-        this.add(new SpriteComponent(image, repeat));
+        this.add(new ImageComponent(image, repeat));
         return this;
     }
     

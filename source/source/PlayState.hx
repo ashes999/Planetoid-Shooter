@@ -23,7 +23,7 @@ class PlayState extends FlxState
 
         var background:Entity = new Entity()
             .move(0, 0)
-            .sprite('assets/images/background.jpg',true);
+            .image('assets/images/background.jpg',true);
         
         Player.create();
 	}

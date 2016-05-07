@@ -14,8 +14,6 @@ import nebula.ecs.component.PositionComponent;
 // Looks for KeyboardInputComponents and moves their SpriteComponents to arrow keys or WASD
 class KeyboardInputMovementSystem extends AbstractSystem
 {
-    private var state:FlxState;
-    
     public function new()
     {
         super([KeyboardInputComponent, PositionComponent]);

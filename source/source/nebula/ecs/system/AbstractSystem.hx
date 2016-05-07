@@ -50,7 +50,7 @@ class AbstractSystem
     
     private function doesHaveAllRequiredComponentTypes(entity:Entity):Bool
     {
-        for (type in componentTypes)
+        for (type in this.componentTypes)
         {
             if (!entity.has(type))
             {

@@ -4,7 +4,7 @@ import flixel.FlxState;
 
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.system.AbstractSystem;
-import nebula.ecs.system.DrawSpriteSystem;
+import nebula.ecs.system.DrawImageSystem;
 import nebula.ecs.system.DrawColourSystem;
 import nebula.ecs.system.KeyboardInputMovementSystem;
 import nebula.ecs.system.FollowCameraSystem;
@@ -60,10 +60,11 @@ class Container
     
     public function addDefaultSystems(state:FlxState):Void
     {
-        this.addSystem(new DrawSpriteSystem(state))
-            .addSystem(new DrawColourSystem(state))
-            .addSystem(new KeyboardInputMovementSystem())
-            .addSystem(new FollowCameraSystem(state))
-            .addSystem(new MouseClickSystem(state));
+        this.addSystem(new KeyboardInputMovementSystem())
+            .addSystem(new FollowCameraSystem())
+            .addSystem(new MouseClickSystem())
+            // These are always last so we guarantee consistency
+            .addSystem(new DrawImageSystem(state))
+            .addSystem(new DrawColourSystem(state));
     }
 }

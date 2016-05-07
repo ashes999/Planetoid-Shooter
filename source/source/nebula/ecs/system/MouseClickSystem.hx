@@ -9,7 +9,7 @@ import nebula.ecs.Entity;
 class MouseClickSystem extends AbstractSystem
 {
     
-    public function new(state:FlxState)
+    public function new()
     {
         super([MouseClickComponent]);
     }

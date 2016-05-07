@@ -2,20 +2,21 @@ package nebula.ecs.system;
 
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.PositionComponent;
-import nebula.ecs.component.SpriteComponent;
+import nebula.ecs.component.ImageComponent;
 import nebula.ecs.Entity;
 
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxBackdrop;
-// Looks for and initializes SpriteComponent instances
-class DrawSpriteSystem extends AbstractSystem
+
+// Looks for and initializes ImageComponent instances
+class DrawImageSystem extends AbstractSystem
 {
     private var state:FlxState;
     
     public function new(state:FlxState)
     {
-        super([SpriteComponent, PositionComponent]);
+        super([ImageComponent, PositionComponent]);
         this.state = state;
     }
     
@@ -23,10 +24,10 @@ class DrawSpriteSystem extends AbstractSystem
     {
         for (entity in this.entities)
         {
-            var sprite:SpriteComponent = entity.get(SpriteComponent);
+            var image:ImageComponent = entity.get(ImageComponent);
             var position:PositionComponent = entity.get(PositionComponent);
 
-            sprite.sprite.setPosition(position.x,position.y);
+            image.sprite.setPosition(position.x,position.y);
         }
     }
     override public function entityChanged(entity:Entity):Void
@@ -34,23 +35,23 @@ class DrawSpriteSystem extends AbstractSystem
         super.entityChanged(entity);
         for (entity in this.entities)
         {
-            var sprite:SpriteComponent = entity.get(SpriteComponent);            
-            if (sprite.sprite == null)
+            var image:ImageComponent = entity.get(ImageComponent);            
+            if (image.sprite == null)
             {
-                if(sprite.isRepeating)
+                if (image.isRepeating)
                 {
-                    sprite.sprite = new FlxBackdrop(sprite.image) ;
+                    image.sprite = new FlxBackdrop(image.image) ;
                 }
                 else
                 {
-                    sprite.sprite = new FlxSprite(0,0,sprite.image);
+                    image.sprite = new FlxSprite(0, 0, image.image);
                 }
-                this.state.add(sprite.sprite);
+                this.state.add(image.sprite);
             }
             
             var position:PositionComponent = entity.get(PositionComponent);
-            sprite.sprite.x = position.x;
-            sprite.sprite.y = position.y;
+            image.sprite.x = position.x;
+            image.sprite.y = position.y;
         }
     }
 }

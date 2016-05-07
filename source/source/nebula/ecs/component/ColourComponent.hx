@@ -2,7 +2,7 @@ package nebula.ecs.component;
 
 import flixel.FlxSprite;
 
-class ColourComponent extends AbstractComponent
+class ColourComponent extends SpriteComponent
 {
     public var red:Int = 0;
     public var green:Int = 0;
@@ -10,9 +10,6 @@ class ColourComponent extends AbstractComponent
     public var width:Int = 0;
     public var height:Int = 0;    
     
-    // internal
-    public var sprite:FlxSprite;
-
     public function new(red:Int, green:Int, blue:Int, width:Int, height:Int)
     {
         super();

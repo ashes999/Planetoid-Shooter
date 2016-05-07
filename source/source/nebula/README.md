@@ -22,9 +22,7 @@ class PlayState extends FlxState
 		super.create();
         container.addDefaultSystems(this);
         
-        container.add(new Entity(container)
-            .add(new ColourComponent(255, 128, 0, 48, 48))
-            .add(new KeyboardInputComponent(100)));
+        container.add(new Entity(container).colourC(255, 128, 0).size(48, 48).moveWithKeyboard(100);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -38,14 +36,14 @@ class PlayState extends FlxState
 Example of a system that initializes and draws sprites:
 
 ```
-class DrawSpriteSystem extends AbstractSystem
+class DrawImageSystem extends AbstractSystem
 {
     private var state:FlxState;
     
     public function new(container:Container, state:FlxState)
     {
-        // Get all entities that have both a sprite and a position
-        super(container, [SpriteComponent, PositionComponent]);
+        // Get all entities that have both an image and a position
+        super(container, [ImageComponent, PositionComponent]);
         this.state = state;
     }
     
@@ -53,7 +51,7 @@ class DrawSpriteSystem extends AbstractSystem
     {
         for (entity in this.entities)
         {
-            var component:SpriteComponent = entity.get(SpriteComponent);            
+            var component:ImageComponent = entity.get(ImageComponent);            
             if (component.sprite == null)
             {
                 var s:FlxSprite = new FlxSprite();
@@ -62,6 +60,7 @@ class DrawSpriteSystem extends AbstractSystem
                 this.state.add(s);
             }
             
+            // Synch sprite's position with position-component's position
             var pos:PositionComponent = entity.get(PositionComponent);
             component.sprite.x = pos.x;
             component.sprite.y = pos.y;
