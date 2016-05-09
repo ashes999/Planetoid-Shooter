@@ -72,42 +72,8 @@ class Entity
         
     ////////////////////// Start fluent API //////////////////////
     
-    public function move(x:Int, y:Int):Entity
-    {
-        this.add(new PositionComponent(x, y));
-        return this;
-    } 
-    
-    public function image(image:String, repeat:Bool = false):Entity
-    {
-        this.add(new ImageComponent(image, repeat));
-        return this;
-    }
-    
-    public function trackWithCamera():Entity
-    {
-        this.add(new CameraComponent());
-        return this;
-    }
-    
-    // MoveSpeed is in pixels per second
-    public function moveWithKeyboard(moveSpeed:Int):Entity
-    {
-        this.add(new KeyboardInputComponent(moveSpeed));
-        return this;
-    }
-    
-    public function onClick(callback:Float->Float->Void):Entity
-    {
-        var mouseComponent:MouseClickComponent = new MouseClickComponent();
-        mouseComponent.registerCallBack(callback);
-        this.add(mouseComponent);
-        return this;
-    }
-    
     // Calling colour without calling size (or vice-versa) should give sensible results
     // The default is a 32x32 red square
-    
     public function colour(red:Int, green:Int, blue:Int):Entity
     {
         if (!this.has(ColourComponent))
@@ -119,6 +85,45 @@ class Entity
             var c = this.get(ColourComponent);
             this.add(new ColourComponent(red, green, blue, c.width, c.height));
         }
+        return this;
+    }
+    
+    public function health(maximumHealth:Int):Entity
+    {
+        this.add(new HealthComponent(maximumHealth));
+        return this;
+    }
+    
+    public function image(image:String, repeat:Bool = false):Entity
+    {
+        this.add(new ImageComponent(image, repeat));
+        return this;
+    }
+    
+    public function move(x:Int, y:Int):Entity
+    {
+        this.add(new PositionComponent(x, y));
+        return this;
+    } 
+    
+    // MoveSpeed is in pixels per second
+    public function moveWithKeyboard(moveSpeed:Int):Entity
+    {
+        this.add(new KeyboardInputComponent(moveSpeed));
+        return this;
+    }
+    
+    public function trackWithCamera():Entity
+    {
+        this.add(new CameraComponent());
+        return this;
+    }
+    
+    public function onClick(callback:Float->Float->Void):Entity
+    {
+        var mouseComponent:MouseClickComponent = new MouseClickComponent();
+        mouseComponent.registerCallBack(callback);
+        this.add(mouseComponent);
         return this;
     }
     
