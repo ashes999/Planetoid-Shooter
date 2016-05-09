@@ -21,6 +21,8 @@ class DrawColourSystem extends AbstractSystem
     
     override public function update(elapsed:Float):Void
     {
+        super.update(elapsed);
+        
         for (entity in this.entities)
         {
             var colour:ColourComponent = entity.get(ColourComponent);            
@@ -42,16 +44,6 @@ class DrawColourSystem extends AbstractSystem
         }
     }
     
-    private function makeSprite(colour:ColourComponent):FlxSprite
-    {
-        var flxColor:FlxColor = FlxColor.fromRGB(colour.red, colour.green, colour.blue);
-        var toReturn:FlxSprite = new FlxSprite();
-        toReturn.makeGraphic(colour.width, colour.height, flxColor);      
-        // Not required (tints), but stores the colour so we can read it later
-        toReturn.color = flxColor;
-        colour.sprite =  toReturn;
-        return toReturn;
-    }
     override public function entityChanged(entity:Entity):Void
     {
         super.entityChanged(entity);
@@ -76,5 +68,16 @@ class DrawColourSystem extends AbstractSystem
                 }
             }
         }
+    }
+    
+    private function makeSprite(colour:ColourComponent):FlxSprite
+    {
+        var flxColor:FlxColor = FlxColor.fromRGB(colour.red, colour.green, colour.blue);
+        var toReturn:FlxSprite = new FlxSprite();
+        toReturn.makeGraphic(colour.width, colour.height, flxColor);      
+        // Not required (tints), but stores the colour so we can read it later
+        toReturn.color = flxColor;
+        colour.sprite =  toReturn;
+        return toReturn;
     }
 }

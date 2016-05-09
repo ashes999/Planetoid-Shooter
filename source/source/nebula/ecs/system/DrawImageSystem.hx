@@ -22,6 +22,7 @@ class DrawImageSystem extends AbstractSystem
     
     override public function update(elapsed:Float):Void
     {
+        super.update(elapsed);
         for (entity in this.entities)
         {
             var image:ImageComponent = entity.get(ImageComponent);
@@ -30,6 +31,7 @@ class DrawImageSystem extends AbstractSystem
             image.sprite.setPosition(position.x,position.y);
         }
     }
+    
     override public function entityChanged(entity:Entity):Void
     {
         super.entityChanged(entity);

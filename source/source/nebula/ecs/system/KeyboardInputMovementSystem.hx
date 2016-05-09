@@ -21,6 +21,7 @@ class KeyboardInputMovementSystem extends AbstractSystem
         
     override public function update(elapsed:Float):Void
     {
+        super.update(elapsed);
         for (entity in this.entities)
         {
             var component:KeyboardInputComponent = entity.get(KeyboardInputComponent);
