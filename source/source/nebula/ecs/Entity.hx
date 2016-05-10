@@ -4,9 +4,10 @@ import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.component.CameraComponent;
 import nebula.ecs.component.ColourComponent;
 import nebula.ecs.component.KeyboardInputComponent;
+import nebula.ecs.component.HealthComponent;
+import nebula.ecs.component.ImageComponent;
 import nebula.ecs.component.MouseClickComponent;
 import nebula.ecs.component.PositionComponent;
-import nebula.ecs.component.ImageComponent;
 import nebula.ecs.Container;
 
 class Entity

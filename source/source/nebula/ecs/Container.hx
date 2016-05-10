@@ -4,8 +4,9 @@ import flixel.FlxState;
 
 import nebula.ecs.component.AbstractComponent;
 import nebula.ecs.system.AbstractSystem;
-import nebula.ecs.system.DrawImageSystem;
 import nebula.ecs.system.DrawColourSystem;
+import nebula.ecs.system.DrawImageSystem;
+import nebula.ecs.system.DrawProgressBarSystem;
 import nebula.ecs.system.KeyboardInputMovementSystem;
 import nebula.ecs.system.FollowCameraSystem;
 import nebula.ecs.system.MouseClickSystem;
@@ -65,6 +66,7 @@ class Container
             .addSystem(new MouseClickSystem())
             // These are always last so we guarantee consistency
             .addSystem(new DrawImageSystem(state))
+            .addSystem(new DrawProgressBarSystem(state))            
             .addSystem(new DrawColourSystem(state));
     }
 }

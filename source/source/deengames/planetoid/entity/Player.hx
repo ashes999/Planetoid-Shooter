@@ -17,14 +17,19 @@ class Player
     public static function create():Entity
     {
         var entity:Entity =  new Entity()
-            .colour(255, 0, 0)
+            //.colour(255, 0, 0)
             .move(0, 0)
             .trackWithCamera()
-            .moveWithKeyboard(100)
-            .onClick(function(x:Float,y:Float)
+            .moveWithKeyboard(100);
+        entity.onClick(function(x:Float,y:Float)
             {
-                trace('You clicked at ${x}, ${y}!');
+                entity.get(nebula.ecs.component.ProgressBarComponent).currentProgress += 25;
             });
+            
+        var p = new nebula.ecs.component.ProgressBarComponent(100);
+        p.currentProgress = 33;
+        
+        entity.add(p);
         return entity;
     }
 }

@@ -31,15 +31,6 @@ class DrawColourSystem extends AbstractSystem
             if (colour.sprite != null)
             {
                 colour.sprite.setPosition(position.x,position.y);
-                // Sprite height doesn't match component height
-                if (colour.sprite.width != colour.width || colour.sprite.height != colour.height
-                // Sprite colour doesn't match component colour
-                    || colour.sprite.color.red != colour.red || colour.sprite.color.green != colour.green || colour.sprite.color.blue != colour.blue )
-                {
-                    this.state.remove(colour.sprite);
-                    this.makeSprite(colour);
-                    this.state.add(colour.sprite);
-                }
             }
         }
     }
