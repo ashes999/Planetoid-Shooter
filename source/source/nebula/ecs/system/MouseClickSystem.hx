@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxState;
 
 import nebula.ecs.component.MouseClickComponent;
-import nebula.ecs.Entity;
 
 class MouseClickSystem extends AbstractSystem
 {
@@ -14,17 +13,18 @@ class MouseClickSystem extends AbstractSystem
         super([MouseClickComponent]);
     }
     
-    override public function update(elapsed:Float):Void
+    override public function update(elapsed:Float)
     {
-        if(flixel.FlxG.mouse.justPressed)
+        if (flixel.FlxG.mouse.justPressed)
         {
 
             for (entity in this.entities)
             {
                 var mouseClickComponent:MouseClickComponent = entity.get(MouseClickComponent);
                 
-                for (i in 0 ... mouseClickComponent.callbacks.length) {
-                    mouseClickComponent.callbacks[i](FlxG.mouse.x,FlxG.mouse.y);
+                for (i in 0 ... mouseClickComponent.callbacks.length)
+                {
+                    mouseClickComponent.callbacks[i](FlxG.mouse.x, FlxG.mouse.y);
                 }
             }
         }
