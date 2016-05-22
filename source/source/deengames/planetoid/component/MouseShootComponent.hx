@@ -14,20 +14,13 @@ class MouseShootComponent extends AbstractComponent
 {
     private var speed:Int=5;
     public var gun:FlxWeapon;
+    public var fireRate:Int;
+    public var bulletLifeSpan = new FlxBounds(1.4, 1.8);
+    
     public function new()
     {
         super();
-        gun = new FlxWeapon("gun",shrug,FlxWeaponFireFrom.POSITION(new FlxBounds(new FlxPoint(0,0), new FlxPoint(0,0))),FlxWeaponSpeedMode.SPEED(new FlxBounds(0.0,10)));
-        //FlxWeaponFireMode.FIRE_AT_MOUSE,
-        trace(gun.fireAtMouse());
-    }
-    public function shrug(weapon:FlxTypedWeapon<FlxBullet>):FlxBullet
-    {
-    	var bullet = new FlxBullet();
-    	bullet.makeGraphic(120,50);
-    	FlxG.state.add(bullet);
-    	FlxG.watch.add(bullet,"x");
-    	return bullet;
-
+        this.fireRate = 200;
+        this.bulletLifeSpan = new FlxBounds(1.4, 1.8);
     }
 }
